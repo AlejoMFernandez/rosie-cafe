@@ -1,0 +1,1197 @@
+{
+ "$schema": "https://raw.githubusercontent.com/AlejoMFernandez/kit-demos/main/docs/cliente.schema.json",
+ "id": "rosie-cafe",
+ "nombre": "Rosie Café",
+ "instagram": "rosiecafe__",
+ "pais": "AR",
+ "idioma": "es",
+ "modo": "demo",
+ "demoVersion": 1,
+ "whatsapp": "https://ig.me/m/rosiecafe__",
+ "prefijoPedido": "RC",
+ "supabase": {
+  "url": "",
+  "anonKey": ""
+ },
+ "marca": {
+  "logo": "img/logo.svg",
+  "logoPanel": "img/logo-claro.svg",
+  "logoClaro": "img/logo-claro.svg",
+  "isotipo": "img/tita.svg",
+  "favicon": "img/favicon.png",
+  "colores": {
+   "fondo": "#FFF6F1",
+   "superficie": "#FFFFFF",
+   "texto": "#5A0F1C",
+   "primario": "#5A0F1C",
+   "acento": "#E38B95",
+   "borde": "#E8CFC9"
+  },
+  "fuentes": {
+   "titulos": "'Barlow Condensed', 'Arial Narrow', sans-serif",
+   "texto": "'Archivo', system-ui, sans-serif",
+   "googleFonts": "Barlow+Condensed:wght@600;700&family=Archivo:wght@400;500;600;700&family=Yellowtail"
+  },
+  "estilo": {
+   "forma": "pildora",
+   "sombra": "suave",
+   "borde": "1.5px",
+   "mayusculas": true
+  }
+ },
+ "modulos": {
+  "carta": true,
+  "carrito": true,
+  "tienda": true,
+  "reservas": true,
+  "admin": true
+ },
+ "horarios": {
+  "mie": [
+   [
+    "10:00",
+    "20:00"
+   ]
+  ],
+  "jue": [
+   [
+    "10:00",
+    "20:00"
+   ]
+  ],
+  "vie": [
+   [
+    "10:00",
+    "20:00"
+   ]
+  ],
+  "sab": [
+   [
+    "10:00",
+    "20:00"
+   ]
+  ],
+  "dom": [
+   [
+    "10:00",
+    "20:00"
+   ]
+  ]
+ },
+ "reservas": {
+  "maxPersonas": 60,
+  "anticipacionMin": 4320,
+  "diasAdelante": 180,
+  "servicios": [
+   {
+    "id": "privado",
+    "nombre": "Evento privado",
+    "tandas": [
+     {
+      "nombre": "Mediodía",
+      "turnos": [
+       "12:30"
+      ],
+      "capacidad": 60
+     },
+     {
+      "nombre": "Tarde",
+      "turnos": [
+       "16:30"
+      ],
+      "capacidad": 60
+     }
+    ]
+   }
+  ],
+  "extras": [
+   {
+    "id": "boda",
+    "label": "Es una boda"
+   },
+   {
+    "id": "cumple",
+    "label": "Es un cumple o bautismo"
+   },
+   {
+    "id": "catering",
+    "label": "Es catering para llevar"
+   }
+  ]
+ },
+ "eventosTipos": [
+  {
+   "id": "taller",
+   "nombre": "Taller"
+  },
+  {
+   "id": "musica",
+   "nombre": "Música en la terraza"
+  }
+ ],
+ "eventos": [
+  {
+   "id": "taller-1611",
+   "tipo": "taller",
+   "nombre": "Taller de medialunas",
+   "fecha": "2026-11-16",
+   "hora": "18:30",
+   "cupo": 12,
+   "precio": null,
+   "descripcion": "Clase práctica + degustación con Trinidad Benedetti. El último del año.",
+   "reserva": true
+  }
+ ],
+ "pedidos": {
+  "salidas": [
+   "mercadopago",
+   "efectivo",
+   "whatsapp"
+  ],
+  "tipos": [
+   "retiro"
+  ],
+  "envio": 0,
+  "minimo": 0,
+  "sinPrecio": "a_confirmar",
+  "encargo": {
+   "anticipacionHoras": 3,
+   "diasAdelante": 21,
+   "franjas": [
+    {
+     "id": "manana",
+     "nombre": "Mañana",
+     "desde": "10:00",
+     "hasta": "13:00"
+    },
+    {
+     "id": "tarde",
+     "nombre": "Tarde",
+     "desde": "13:00",
+     "hasta": "17:00"
+    },
+    {
+     "id": "cierre",
+     "nombre": "Antes de cerrar",
+     "desde": "17:00",
+     "hasta": "20:00"
+    }
+   ]
+  }
+ },
+ "pagos": {
+  "mercadopago": {
+   "endpoint": "https://kit-demos-amf.vercel.app/api/mp-preference",
+   "modo": "sandbox"
+  },
+  "efectivo": {
+   "porDia": {
+    "mie": 5,
+    "jue": 5,
+    "vie": 5,
+    "sab": 5,
+    "dom": 5
+   }
+  }
+ },
+ "carta": {
+  "categorias": [
+   {
+    "id": "desayunos",
+    "nombre": "Desayunos",
+    "orden": 1,
+    "bajada": "Hasta las 12:30 hs. Incluyen café o infusión y vasito de jugo del día."
+   },
+   {
+    "id": "almuerzos",
+    "nombre": "Almuerzos",
+    "orden": 2,
+    "bajada": "De 12:30 a 16:00 hs. Menú ejecutivo de miércoles a viernes."
+   },
+   {
+    "id": "todahora",
+    "nombre": "A toda hora",
+    "orden": 3
+   },
+   {
+    "id": "pasteleria",
+    "nombre": "Pastelería",
+    "orden": 4
+   },
+   {
+    "id": "promos",
+    "nombre": "Promociones (:",
+    "orden": 5
+   },
+   {
+    "id": "calientes",
+    "nombre": "Cafetería",
+    "orden": 6,
+    "bajada": "Blend de Komún Tostadores, cinco variedades de Colombia: notas chocolatosas y florales, sabe a duraznos con crema."
+   },
+   {
+    "id": "frias",
+    "nombre": "Frías y sin alcohol",
+    "orden": 7
+   },
+   {
+    "id": "vinos",
+    "nombre": "Vinos & Cía.",
+    "orden": 8,
+    "bajada": "De menor a mayor intensidad (:"
+   },
+   {
+    "id": "t-tortas",
+    "nombre": "Tortas enteras",
+    "orden": 9,
+    "tienda": true,
+    "anticipacionHoras": 48,
+    "sena": 0.5,
+    "bajada": "Rinden 15 a 20 porciones. Se encargan con 48 hs y se confirman con el 50 % de seña; el resto, al retirar."
+   },
+   {
+    "id": "t-llevar",
+    "nombre": "Para llevar",
+    "orden": 10,
+    "tienda": true,
+    "bajada": "Pastelería del día, granola y café para la casa."
+   },
+   {
+    "id": "t-vinos",
+    "nombre": "Vinos para llevar",
+    "orden": 11,
+    "tienda": true,
+    "bajada": "Los vinos tienen 10 % de descuento para llevar: ya está aplicado."
+   }
+  ],
+  "productos": [
+   {
+    "id": "huevos",
+    "categoria": "desayunos",
+    "nombre": "Huevos revueltos con medialuna",
+    "precio": 21000,
+    "descripcion": "Con tostadas de medialuna y manteca. Extras: panceta $6.000 · palta $4.000.",
+    "disponible": true,
+    "foto": "img/f/huevos-700.webp",
+    "etiquetas": [
+     "vegetariano"
+    ]
+   },
+   {
+    "id": "desayuno-completo",
+    "categoria": "desayunos",
+    "nombre": "Plato de desayuno completo",
+    "precio": 23000,
+    "descripcion": "Pan lactal, lomito artesanal \"José Juarroz\", panceta ahumada, queso cottage, palta, mermelada de frutas de temporada y manteca de hierbas.",
+    "disponible": true
+   },
+   {
+    "id": "ejecutivo",
+    "categoria": "almuerzos",
+    "nombre": "Menú ejecutivo",
+    "precio": 27000,
+    "descripcion": "Miércoles a viernes (no feriados): un principal + limonada, pomelada, soda o agua + postre del día o café.",
+    "disponible": true
+   },
+   {
+    "id": "sandwich",
+    "categoria": "almuerzos",
+    "nombre": "Sándwich de pollo 3.0 o el asiático (:",
+    "precio": 25000,
+    "descripcion": "Pollo, queso ahumado, panceta laqueada en miel, cebolla encurtida, lechuga capuchina, ciboulette y mayo asiática llena de cosas ricas. Ni preguntes, tiene de todo, vos decí que sí. En shokupan hecho en Rosie.",
+    "disponible": true,
+    "foto": "img/f/sandwich-700.webp"
+   },
+   {
+    "id": "caesar",
+    "categoria": "almuerzos",
+    "nombre": "Ensalada Caesar de Rosie",
+    "precio": 25000,
+    "descripcion": "Mix de lechugas, pollo asado, aderezo de limón y anchoas, queso sardo, crutones y pangrattato.",
+    "disponible": true
+   },
+   {
+    "id": "temporada",
+    "categoria": "almuerzos",
+    "nombre": "Ensalada de temporada",
+    "precio": 23000,
+    "descripcion": "Porotos negros, palta, frutillas, pepino, arvejas, pickles de cebolla, hierbas y dressing de aceto y mostaza. Elegí pollo asado o sardo. Extras: sardo $3.000 · focaccia $1.000.",
+    "disponible": true,
+    "etiquetas": [
+     "singluten"
+    ]
+   },
+   {
+    "id": "mbeju",
+    "categoria": "almuerzos",
+    "nombre": "Mbejú de primavera",
+    "precio": 23000,
+    "descripcion": "Hummus de porotos, palta, zanahorias glaseadas, ensalada de verdes y hierbas con frutillas, cebolla y pepino.",
+    "disponible": true,
+    "etiquetas": [
+     "vegetariano"
+    ]
+   },
+   {
+    "id": "tostado-quesos",
+    "categoria": "almuerzos",
+    "nombre": "Tostado 2 quesos y pesto",
+    "precio": 18000,
+    "descripcion": "Pesto de albahaca y almendras, con alioli de zanahorias, en pan lactal casero tipo shokupan.",
+    "disponible": true,
+    "etiquetas": [
+     "vegetariano"
+    ]
+   },
+   {
+    "id": "tostado-lomito",
+    "categoria": "almuerzos",
+    "nombre": "Tostado de lomito y queso americano",
+    "precio": 18000,
+    "descripcion": "Lomito artesanal \"José Juarroz\", manteca de hierbas y alioli de zanahorias, en shokupan hecho en Rosie.",
+    "disponible": true
+   },
+   {
+    "id": "tarta",
+    "categoria": "almuerzos",
+    "nombre": "Tarta de la semana",
+    "precio": 22000,
+    "descripcion": "Preguntá cuál hay. Con ensalada de verdes, semillas, pickles y aderezo de mostaza y aceto.",
+    "disponible": true
+   },
+   {
+    "id": "medialuna-rellena",
+    "categoria": "todahora",
+    "nombre": "Medialuna rellena",
+    "precio": 7600,
+    "descripcion": "Dos quesos (pategrás y sardo) o lomito y dos quesos.",
+    "disponible": true
+   },
+   {
+    "id": "yogur",
+    "categoria": "todahora",
+    "nombre": "Yogur, granola, frutas y miel",
+    "precio": 17000,
+    "descripcion": "Yogur hecho en Rosie. Granola tradicional (avena, almendras, cranberries) o sin gluten (quinoa pop, maíz, nueces y pasas).",
+    "disponible": true,
+    "foto": "img/f/yogur-700.webp",
+    "etiquetas": [
+     "vegetariano"
+    ]
+   },
+   {
+    "id": "chia",
+    "categoria": "todahora",
+    "nombre": "Chía pudding de cacao + frutas",
+    "precio": 17000,
+    "descripcion": "Leche de almendras, cacao, mantequilla de maní, castañas de cajú, nibs y frutas. Podés pedirlo sin azúcar :)",
+    "disponible": true,
+    "foto": "img/f/chia-700.webp",
+    "etiquetas": [
+     "singluten"
+    ]
+   },
+   {
+    "id": "tostada-palta",
+    "categoria": "todahora",
+    "nombre": "Tostada de palta",
+    "precio": 12000,
+    "descripcion": "Con pickles de rabanitos, chutney de peras y hierbas frescas.",
+    "disponible": true,
+    "etiquetas": [
+     "vegano"
+    ]
+   },
+   {
+    "id": "tostadas",
+    "categoria": "todahora",
+    "nombre": "Tostadas (2)",
+    "precio": 7500,
+    "descripcion": "Con queso crema o mantequilla de maní + mermelada en pan de centeno, o manteca y dulce de leche en pan lactal.",
+    "disponible": true
+   },
+   {
+    "id": "tostado",
+    "categoria": "todahora",
+    "nombre": "Tostado en pan lactal casero",
+    "precio": 18000,
+    "descripcion": "Dos quesos + pesto de albahaca y almendras, o lomito \"José Juarroz\" con queso americano.",
+    "disponible": true
+   },
+   {
+    "id": "quesos",
+    "categoria": "todahora",
+    "nombre": "Plato de quesos",
+    "precio": 18000,
+    "descripcion": "Con miel lactofermentada, focaccia casera calentita y frutitas de estación.",
+    "disponible": true
+   },
+   {
+    "id": "chipacito",
+    "categoria": "pasteleria",
+    "nombre": "Chipacito",
+    "precio": 3000,
+    "descripcion": "Sale calentito ;)",
+    "disponible": true
+   },
+   {
+    "id": "scone",
+    "categoria": "pasteleria",
+    "nombre": "Scone tibio de pickles y sardo",
+    "precio": 8000,
+    "descripcion": "Con dip de queso crema y oliva.",
+    "disponible": true
+   },
+   {
+    "id": "medialuna",
+    "categoria": "pasteleria",
+    "nombre": "Medialuna de manteca",
+    "precio": 2700,
+    "descripcion": "Las hacemos todos los días, pocas, para que salgan gorditas.",
+    "disponible": true,
+    "foto": "img/f/medialunas-700.webp"
+   },
+   {
+    "id": "snicker",
+    "categoria": "pasteleria",
+    "nombre": "Snicker",
+    "precio": 7000,
+    "descripcion": "Harina de almendras, mantequilla de maní, chocolate amargo, dátiles y quinoa pop.",
+    "disponible": true,
+    "etiquetas": [
+     "singluten"
+    ]
+   },
+   {
+    "id": "galleta-sh",
+    "categoria": "pasteleria",
+    "nombre": "Galleta de chocolate sin harina",
+    "precio": 5000,
+    "descripcion": "",
+    "disponible": true,
+    "etiquetas": [
+     "singluten"
+    ]
+   },
+   {
+    "id": "galleta-av",
+    "categoria": "pasteleria",
+    "nombre": "Galleta de chocolate y avellanas",
+    "precio": 5000,
+    "descripcion": "Manteca tostada, chocolate con leche y chocolate 56 %.",
+    "disponible": true,
+    "foto": "img/f/galletas-700.webp"
+   },
+   {
+    "id": "masita",
+    "categoria": "pasteleria",
+    "nombre": "Masita de manteca y limón marroquí",
+    "precio": 3500,
+    "descripcion": "Con un toque de sal.",
+    "disponible": true
+   },
+   {
+    "id": "financier",
+    "categoria": "pasteleria",
+    "nombre": "Financier de naranja y frambuesas",
+    "precio": 3800,
+    "descripcion": "Mini budín húmedo de naranja con almendras fileteadas.",
+    "disponible": true,
+    "etiquetas": [
+     "vegano"
+    ]
+   },
+   {
+    "id": "bocadito",
+    "categoria": "pasteleria",
+    "nombre": "Bocadito de limón y amapolas",
+    "precio": 6500,
+    "descripcion": "Budín húmedo de limón y amapolas con centro de curd de limón.",
+    "disponible": true
+   },
+   {
+    "id": "oliva",
+    "categoria": "pasteleria",
+    "nombre": "Torta de oliva, yogurt y arándanos",
+    "precio": 10000,
+    "descripcion": "Con almendras y cardamomo, sale con crema de vainilla.",
+    "disponible": true
+   },
+   {
+    "id": "vasca",
+    "categoria": "pasteleria",
+    "nombre": "Torta vasca tradicional",
+    "precio": 12000,
+    "descripcion": "Con blend de quesos. Sale sola; sumale dulce de frutillas y moras por $3.000.",
+    "disponible": true,
+    "foto": "img/f/vasca-700.webp",
+    "etiquetas": [
+     "singluten"
+    ]
+   },
+   {
+    "id": "torta-temporada",
+    "categoria": "pasteleria",
+    "nombre": "Torta de temporada",
+    "precio": 13000,
+    "descripcion": "Chiffon de avellanas tostadas, ganache de chocolate con leche, crema de vainilla y dulce de frutillas.",
+    "disponible": true
+   },
+   {
+    "id": "promo-galleta",
+    "categoria": "promos",
+    "nombre": "Café + galleta",
+    "precio": 9000,
+    "descripcion": "Café con leche, americano o té a elección + galleta a elección.",
+    "disponible": true
+   },
+   {
+    "id": "promo-medialunas",
+    "categoria": "promos",
+    "nombre": "Café + 2 medialunas",
+    "precio": 9500,
+    "descripcion": "Café con leche, americano o té a elección + 2 medialunas.",
+    "disponible": true,
+    "foto": "img/f/cafe-medialuna-700.webp"
+   },
+   {
+    "id": "promo-tostadas",
+    "categoria": "promos",
+    "nombre": "Café + tostadas",
+    "precio": 11000,
+    "descripcion": "Café con leche, americano o té a elección + tostadas a elección.",
+    "disponible": true
+   },
+   {
+    "id": "espresso",
+    "categoria": "calientes",
+    "nombre": "Espresso simple",
+    "precio": 4200,
+    "descripcion": "1 shot en taza pequeña.",
+    "disponible": true
+   },
+   {
+    "id": "doble",
+    "categoria": "calientes",
+    "nombre": "Espresso doble",
+    "precio": 5200,
+    "descripcion": "2 shots en taza pequeña.",
+    "disponible": true
+   },
+   {
+    "id": "americano",
+    "categoria": "calientes",
+    "nombre": "Americano",
+    "precio": 5600,
+    "descripcion": "2 shots + agua a 75°.",
+    "disponible": true
+   },
+   {
+    "id": "jarrito",
+    "categoria": "calientes",
+    "nombre": "Cortado en jarrito",
+    "precio": 5400,
+    "descripcion": "1 shot + leche en vasito de vidrio.",
+    "disponible": true
+   },
+   {
+    "id": "cortado-doble",
+    "categoria": "calientes",
+    "nombre": "Cortado doble",
+    "precio": 6000,
+    "descripcion": "2 shots + leche en taza mediana.",
+    "disponible": true
+   },
+   {
+    "id": "capuccino",
+    "categoria": "calientes",
+    "nombre": "Capuccino",
+    "precio": 5800,
+    "descripcion": "1 shot + leche + cacao.",
+    "disponible": true
+   },
+   {
+    "id": "cafe-leche",
+    "categoria": "calientes",
+    "nombre": "Café con leche",
+    "precio": 6000,
+    "descripcion": "1 shot + leche en taza grande.",
+    "disponible": true
+   },
+   {
+    "id": "lagrima",
+    "categoria": "calientes",
+    "nombre": "Lágrima",
+    "precio": 5600,
+    "descripcion": "Leche espumada apenas cortada con café.",
+    "disponible": true
+   },
+   {
+    "id": "cardamomo",
+    "categoria": "calientes",
+    "nombre": "Latte de cardamomo",
+    "precio": 7000,
+    "descripcion": "Almíbar de cardamomo + leche.",
+    "disponible": true
+   },
+   {
+    "id": "mocaccino",
+    "categoria": "calientes",
+    "nombre": "Mocaccino",
+    "precio": 7000,
+    "descripcion": "Ganache de chocolate y chauchas de vainilla.",
+    "disponible": true
+   },
+   {
+    "id": "choco",
+    "categoria": "calientes",
+    "nombre": "Chocolate caliente con masita",
+    "precio": 8800,
+    "descripcion": "Ganache de choco Ecuador 56 % y vainilla de Madagascar.",
+    "disponible": true
+   },
+   {
+    "id": "v60",
+    "categoria": "calientes",
+    "nombre": "V60 (2 tazas)",
+    "precio": 11500,
+    "descripcion": "Cafés invitados de Komún: Colombia, Chirripó (Costa Rica) o Guji/Sidamo (Etiopía). 3 tazas $16.500.",
+    "disponible": true
+   },
+   {
+    "id": "te",
+    "categoria": "calientes",
+    "nombre": "Té en hebras",
+    "precio": 6000,
+    "descripcion": "Negro, Earl Grey, verde con hibiscus, chai o verde y jazmín. Frío +$1.000.",
+    "disponible": true
+   },
+   {
+    "id": "dorada",
+    "categoria": "calientes",
+    "nombre": "Leche dorada",
+    "precio": 6400,
+    "descripcion": "Cúrcuma, canela, jengibre, pimienta, clavo y aceite de coco + leche + miel.",
+    "disponible": true
+   },
+   {
+    "id": "chai",
+    "categoria": "calientes",
+    "nombre": "Chai latte",
+    "precio": 6400,
+    "descripcion": "Almíbar concentrado de chai + leche. Dirty chai (con espresso) $7.500.",
+    "disponible": true
+   },
+   {
+    "id": "coldbrew",
+    "categoria": "frias",
+    "nombre": "Cold brew origen Costa Rica",
+    "precio": 6000,
+    "descripcion": "Macerado en frío por 20 horas.",
+    "disponible": true,
+    "foto": "img/f/coldbrew-700.webp"
+   },
+   {
+    "id": "latte-frio",
+    "categoria": "frias",
+    "nombre": "Latte frío",
+    "precio": 6400,
+    "descripcion": "Espresso + leche + hielo. Doble $6.800.",
+    "disponible": true
+   },
+   {
+    "id": "sodita",
+    "categoria": "frias",
+    "nombre": "Sodita de frutilla y café",
+    "precio": 7500,
+    "descripcion": "Cold brew + soda + macerado de frutilla.",
+    "disponible": true
+   },
+   {
+    "id": "latte-cb",
+    "categoria": "frias",
+    "nombre": "Latte cold brew con caramelo",
+    "precio": 7500,
+    "descripcion": "Cold brew + caramelo de café + leche batida.",
+    "disponible": true
+   },
+   {
+    "id": "cb-tonica",
+    "categoria": "frias",
+    "nombre": "Cold brew con tónica",
+    "precio": 8000,
+    "descripcion": "Con tónica \"Santa Quina\".",
+    "disponible": true
+   },
+   {
+    "id": "pomelada",
+    "categoria": "frias",
+    "nombre": "Pomelada de albahaca",
+    "precio": 6000,
+    "descripcion": "La favorita de Emi (:",
+    "disponible": true
+   },
+   {
+    "id": "limonada",
+    "categoria": "frias",
+    "nombre": "Limonada de frutilla",
+    "precio": 6000,
+    "descripcion": "Almíbar de frutillas + limón + agua.",
+    "disponible": true
+   },
+   {
+    "id": "jugo",
+    "categoria": "frias",
+    "nombre": "Jugo del día",
+    "precio": 7000,
+    "descripcion": "Frutas y verduras de estación, sin azúcar.",
+    "disponible": true
+   },
+   {
+    "id": "tonica",
+    "categoria": "frias",
+    "nombre": "Tónica \"Santa Quina\" (200 cc)",
+    "precio": 5500,
+    "descripcion": "",
+    "disponible": true
+   },
+   {
+    "id": "sifon",
+    "categoria": "frias",
+    "nombre": "Sifoncito de soda (500 ml)",
+    "precio": 4000,
+    "descripcion": "",
+    "disponible": true
+   },
+   {
+    "id": "oveja",
+    "categoria": "vinos",
+    "nombre": "La Oveja, torrontés",
+    "precio": 24000,
+    "descripcion": "Santa Julia",
+    "disponible": true
+   },
+   {
+    "id": "turbio",
+    "categoria": "vinos",
+    "nombre": "Turbio, sauvignon blanc",
+    "precio": 27000,
+    "descripcion": "Ravera Wines",
+    "disponible": true,
+    "foto": "img/f/vinos-700.webp"
+   },
+   {
+    "id": "zorrito",
+    "categoria": "vinos",
+    "nombre": "El Zorrito, naranjo de chardonnay",
+    "precio": 24000,
+    "descripcion": "Santa Julia",
+    "disponible": true
+   },
+   {
+    "id": "pinkgiovese",
+    "categoria": "vinos",
+    "nombre": "Turbio Pinkgiovese, sangiovese rosado",
+    "precio": 27000,
+    "descripcion": "Ravera Wines",
+    "disponible": true
+   },
+   {
+    "id": "beppe",
+    "categoria": "vinos",
+    "nombre": "El Beppe, criolla",
+    "precio": 22000,
+    "descripcion": "El Beppe, Vinos de Pueblo",
+    "disponible": true
+   },
+   {
+    "id": "gualta",
+    "categoria": "vinos",
+    "nombre": "Gualta, malbec",
+    "precio": 28000,
+    "descripcion": "Michelini i Mufatto",
+    "disponible": true
+   },
+   {
+    "id": "arranque",
+    "categoria": "vinos",
+    "nombre": "Arranque, cabernet franc",
+    "precio": 28000,
+    "descripcion": "2 KM, Finca Beth",
+    "disponible": true
+   },
+   {
+    "id": "vasito",
+    "categoria": "vinos",
+    "nombre": "Vasito de vino",
+    "precio": null,
+    "descripcion": "Preguntá cuál hay abierto.",
+    "disponible": true
+   },
+   {
+    "id": "vermut",
+    "categoria": "vinos",
+    "nombre": "Vermut Rosso o Bianco",
+    "precio": 8500,
+    "descripcion": "Vermut Lombroni.",
+    "disponible": true
+   },
+   {
+    "id": "t-cumple",
+    "categoria": "t-tortas",
+    "nombre": "Torta de cumpleañitos clásica",
+    "precio": 88000,
+    "descripcion": "La armás vos: bizcocho, crema y rellenos. La deco la inspira la pastelera (frutas, flores, picos rizados).",
+    "disponible": true,
+    "foto": "img/f/cumple-1-700.webp",
+    "opciones": [
+     {
+      "id": "bizcocho",
+      "nombre": "Bizcocho",
+      "valores": [
+       {
+        "id": "cacao",
+        "nombre": "Nube de avellanas sabor cacao"
+       },
+       {
+        "id": "vainilla",
+        "nombre": "Nube de avellanas sabor vainilla"
+       },
+       {
+        "id": "coco",
+        "nombre": "Chiffón de coco"
+       }
+      ]
+     },
+     {
+      "id": "crema",
+      "nombre": "Crema",
+      "valores": [
+       {
+        "id": "queso",
+        "nombre": "Crema de queso"
+       },
+       {
+        "id": "chantilly",
+        "nombre": "Chantilly de vainilla"
+       }
+      ]
+     },
+     {
+      "id": "relleno",
+      "nombre": "Relleno",
+      "valores": [
+       {
+        "id": "ddl",
+        "nombre": "Dulce de leche"
+       },
+       {
+        "id": "frambuesa",
+        "nombre": "Dulce de frambuesas"
+       },
+       {
+        "id": "ambos",
+        "nombre": "Dulce de leche y frambuesas"
+       }
+      ]
+     }
+    ],
+    "adicionales": [
+     {
+      "id": "cremoso",
+      "nombre": "Cremoso de dulce de leche y chocolate 56 %",
+      "precio": 18000
+     },
+     {
+      "id": "frutas",
+      "nombre": "Frutillas o arándanos",
+      "precio": 8000
+     },
+     {
+      "id": "ganache",
+      "nombre": "Piso de ganache de chocolate con leche Perú 38 %",
+      "precio": 12000
+     }
+    ]
+   },
+   {
+    "id": "t-temporada",
+    "categoria": "t-tortas",
+    "nombre": "Torta de temporada",
+    "precio": 95000,
+    "descripcion": "Bizcocho nube de avellanas tostadas, ganache de chocolate con leche 35 %, crema de vainilla y jalea de frutillas.",
+    "disponible": true,
+    "foto": "img/f/temporada-700.webp"
+   },
+   {
+    "id": "t-avellanas",
+    "categoria": "t-tortas",
+    "nombre": "Torta de avellanas, naranja y queso",
+    "precio": 86000,
+    "descripcion": "Chiffón húmedo de avellanas tostadas y naranja, jalea de naranjas, crema de queso y chauchas de vainilla.",
+    "disponible": true,
+    "foto": "img/f/limon-700.webp"
+   },
+   {
+    "id": "t-merenguete",
+    "categoria": "t-tortas",
+    "nombre": "Merenguete de avellanas, crema de queso y frutillas",
+    "precio": 85000,
+    "descripcion": "Bizcochos de harina de avellanas y cacao, crema de queso, dulce de frutillas y frutillas frescas. Rinde 10 a 15 porciones.",
+    "disponible": true,
+    "foto": "img/f/merenguete-700.webp",
+    "etiquetas": [
+     "singluten"
+    ]
+   },
+   {
+    "id": "t-vasca",
+    "categoria": "t-tortas",
+    "nombre": "Torta vasca con dulce de frambuesas",
+    "precio": null,
+    "descripcion": "Con frutas frescas.",
+    "disponible": true,
+    "foto": "img/f/vasca-700.webp",
+    "etiquetas": [
+     "singluten"
+    ],
+    "variantes": [
+     {
+      "id": "chica",
+      "nombre": "Chica · 6 porciones",
+      "precio": 55000
+     },
+     {
+      "id": "grande",
+      "nombre": "Grande · 12 a 14 porciones",
+      "precio": 85000
+     }
+    ]
+   },
+   {
+    "id": "t-vasca-choco",
+    "categoria": "t-tortas",
+    "nombre": "Torta vasca de chocolate",
+    "precio": null,
+    "descripcion": "Con dulce de frambuesas y frutas frescas.",
+    "disponible": true,
+    "etiquetas": [
+     "singluten"
+    ],
+    "variantes": [
+     {
+      "id": "chica",
+      "nombre": "Chica · 6 porciones",
+      "precio": 65000
+     },
+     {
+      "id": "grande",
+      "nombre": "Grande · 12 a 14 porciones",
+      "precio": 95000
+     }
+    ]
+   },
+   {
+    "id": "t-humeda",
+    "categoria": "t-tortas",
+    "nombre": "Torta húmeda de chocolate",
+    "precio": null,
+    "descripcion": "Crema de vainilla y frutas frescas.",
+    "disponible": true,
+    "etiquetas": [
+     "singluten"
+    ],
+    "variantes": [
+     {
+      "id": "chica",
+      "nombre": "Chica · 6 porciones",
+      "precio": 55000
+     },
+     {
+      "id": "grande",
+      "nombre": "Grande · 10 a 12 porciones",
+      "precio": 70000
+     }
+    ]
+   },
+   {
+    "id": "t-medialunas",
+    "categoria": "t-llevar",
+    "nombre": "Medialunas de manteca",
+    "precio": 2700,
+    "descripcion": "Por unidad. Pocas por día: encargalas y no te quedás sin.",
+    "disponible": true,
+    "foto": "img/f/medialunas-700.webp"
+   },
+   {
+    "id": "t-chipa",
+    "categoria": "t-llevar",
+    "nombre": "Chipacitos",
+    "precio": 3000,
+    "descripcion": "Por unidad, para calentar en casa.",
+    "disponible": true
+   },
+   {
+    "id": "t-galleta",
+    "categoria": "t-llevar",
+    "nombre": "Galleta de chocolate y avellanas",
+    "precio": 5000,
+    "descripcion": "",
+    "disponible": true,
+    "foto": "img/f/galletas-700.webp"
+   },
+   {
+    "id": "t-galleta-sh",
+    "categoria": "t-llevar",
+    "nombre": "Galleta de chocolate sin harina",
+    "precio": 5000,
+    "descripcion": "",
+    "disponible": true,
+    "etiquetas": [
+     "singluten"
+    ]
+   },
+   {
+    "id": "t-vasca-porcion",
+    "categoria": "t-llevar",
+    "nombre": "Porción de torta vasca",
+    "precio": 12000,
+    "descripcion": "Sumale dulce de frutillas y moras por $3.000.",
+    "disponible": true,
+    "foto": "img/f/vasca-700.webp",
+    "etiquetas": [
+     "singluten"
+    ]
+   },
+   {
+    "id": "t-granola",
+    "categoria": "t-llevar",
+    "nombre": "Granola para la casa",
+    "precio": 11000,
+    "descripcion": "La misma del yogur de Rosie.",
+    "disponible": true,
+    "foto": "img/f/yogur-700.webp",
+    "opciones": [
+     {
+      "id": "tipo",
+      "nombre": "Granola",
+      "valores": [
+       {
+        "id": "trad",
+        "nombre": "Tradicional"
+       },
+       {
+        "id": "sg",
+        "nombre": "Sin gluten"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "t-cafe",
+    "categoria": "t-llevar",
+    "nombre": "Café de origen · ¼ kg",
+    "precio": null,
+    "descripcion": "De Komún Tostadores. Precio a confirmar.",
+    "disponible": true,
+    "opciones": [
+     {
+      "id": "origen",
+      "nombre": "Origen",
+      "valores": [
+       {
+        "id": "chirripo",
+        "nombre": "Chirripó, Costa Rica"
+       },
+       {
+        "id": "guji",
+        "nombre": "Guji/Sidamo, Etiopía"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "t-oveja",
+    "categoria": "t-vinos",
+    "nombre": "La Oveja, torrontés",
+    "precio": 21600,
+    "descripcion": "Santa Julia · en el salón $24.000",
+    "disponible": true
+   },
+   {
+    "id": "t-turbio",
+    "categoria": "t-vinos",
+    "nombre": "Turbio, sauvignon blanc",
+    "precio": 24300,
+    "descripcion": "Ravera Wines · en el salón $27.000",
+    "disponible": true,
+    "foto": "img/f/vinos-700.webp"
+   },
+   {
+    "id": "t-zorrito",
+    "categoria": "t-vinos",
+    "nombre": "El Zorrito, naranjo de chardonnay",
+    "precio": 21600,
+    "descripcion": "Santa Julia · en el salón $24.000",
+    "disponible": true
+   },
+   {
+    "id": "t-pinkgiovese",
+    "categoria": "t-vinos",
+    "nombre": "Turbio Pinkgiovese, sangiovese rosado",
+    "precio": 24300,
+    "descripcion": "Ravera Wines · en el salón $27.000",
+    "disponible": true
+   },
+   {
+    "id": "t-beppe",
+    "categoria": "t-vinos",
+    "nombre": "El Beppe, criolla",
+    "precio": 19800,
+    "descripcion": "El Beppe, Vinos de Pueblo · en el salón $22.000",
+    "disponible": true
+   },
+   {
+    "id": "t-gualta",
+    "categoria": "t-vinos",
+    "nombre": "Gualta, malbec",
+    "precio": 25200,
+    "descripcion": "Michelini i Mufatto · en el salón $28.000",
+    "disponible": true
+   },
+   {
+    "id": "t-arranque",
+    "categoria": "t-vinos",
+    "nombre": "Arranque, cabernet franc",
+    "precio": 25200,
+    "descripcion": "2 KM, Finca Beth · en el salón $28.000",
+    "disponible": true
+   }
+  ]
+ },
+ "textos": {
+  "tuPedido": "Tu bolsita",
+  "verPedido": "Ver la bolsita",
+  "agregar": "A la bolsita",
+  "agregado": "¡A la bolsita!",
+  "carritoVacio": "La bolsita está vacía.",
+  "carritoVacioSub": "Arrancá por una torta entera o unas medialunas para la casa.",
+  "retiro": "Retiro por Ruiz Huidobro 3049",
+  "notaPedido": "¿Algo que Rosie tenga que saber? (alergias, un mensajito en la torta…)",
+  "porMPSub": "Débito o dinero en cuenta (no aceptamos crédito)",
+  "porEfectivo": "En efectivo al retirar (5 % off)",
+  "enviarPedido": "Cerrar pedido",
+  "pedidoListo": "¡Listo! Tita ya avisó en la cocina",
+  "pedidoListoSub": "Tu código es {codigo}. Rosie lo ve en su panel y te confirma por mensaje.",
+  "waPedido": "¡Hola Rosie! Quiero encargar desde la web:",
+  "seguir": "Seguir mirando",
+  "comoPagas": "¿Cómo lo cerrás?",
+  "reservarMesa": "Bodas, eventos y talleres",
+  "confirmarReserva": "Consultar fecha",
+  "comentario": "Contanos qué te imaginás",
+  "reservaLista": "¡Recibimos tu consulta!",
+  "servicio": "¿Qué querés hacer?"
+ }
+}

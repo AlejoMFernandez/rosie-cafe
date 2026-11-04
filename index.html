@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rosie Café · Café, vinito y pastelería en Saavedra</title>
+<meta property="og:image" content="https://rosie-cafe.vercel.app/img/og.jpg?v=1">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:alt" content="Rosie Café: la carta del mes, a un toque">
+<meta property="og:title" content="Rosie Café · Café, vinito y pastelería en Saavedra">
+<meta property="og:description" content="La carta del mes, tortas enteras con seña online y todo lo que pasa en Rosie.">
+<meta property="og:url" content="https://rosie-cafe.vercel.app/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Rosie Café">
+<meta property="og:locale" content="es_AR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://rosie-cafe.vercel.app/img/og.jpg?v=1">
+<meta name="description" content="Rosie Café: comida de abuela, café, vinito y pastelería en Ruiz Huidobro 3049, Saavedra. La carta del mes, tortas enteras por encargo con seña online, talleres y eventos.">
+<meta name="theme-color" content="#E38B95">
+<link rel="icon" href="img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="img/apple-touch.png">
+<script>
+  (function () {
+    var d = document.documentElement; d.classList.add('js');
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('con-intro');
+  })();
+</script>
+<link rel="preload" as="font" type="font/woff2" href="fonts/barlow-condensed-latin-700-normal.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="fonts/archivo-latin-400-normal.woff2" crossorigin>
+<link rel="stylesheet" href="css/fuentes.css?v=1">
+<link rel="preload" as="image" imagesrcset="img/f/hero-mesa-480.webp 480w, img/f/hero-mesa-800.webp 800w" imagesizes="260px" media="(max-width: 899px)">
+<link rel="preload" as="image" imagesrcset="img/f/hero-torta-520.webp 520w, img/f/hero-torta-960.webp 960w" imagesizes="460px" media="(min-width: 900px)">
+<link rel="stylesheet" href="kit/kit.css?v=1">
+<link rel="stylesheet" href="css/estilos.css?v=1">
+</head>
+<body>
+
+<!-- ============ INTRO: el sello ============ -->
+<div class="intro" aria-hidden="true">
+  <div class="intro__mitad intro__mitad--a"><div class="intro__pat"></div></div>
+  <div class="intro__mitad intro__mitad--b"><div class="intro__pat"></div></div>
+  <div class="intro__sello"></div>
+  <div class="intro__marca">
+    <img src="img/tita.svg" alt="" width="132" height="152" class="intro__tita">
+    <img src="img/logo.svg" alt="" width="463" height="218" class="intro__logo">
+  </div>
+</div>
+
+<a class="saltar" href="#carta">Ir a la carta</a>
+
+<!-- ============ BARRA ============ -->
+<header class="barra" data-barra>
+  <div class="barra__in">
+    <a class="barra__logo" href="#inicio" aria-label="Rosie Café, inicio"><img src="img/logo.svg" alt="Rosie Café" width="463" height="218"></a>
+    <nav class="barra__nav" aria-label="Secciones">
+      <a href="#ahora">Ahora en Rosie</a>
+      <a href="#carta">Carta del mes</a>
+      <a href="#tortas">Tortas enteras</a>
+      <a href="#cosas">Pasan cosas</a>
+      <a href="#visitanos">Visitanos</a>
+    </nav>
+    <a class="btn btn--bordo barra__cta" href="#armar">Armá tu torta</a>
+    <button type="button" class="bolsa-btn" data-kit-open="carrito" aria-label="Tu bolsita">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 8h13l-1.2 12.2a1 1 0 0 1-1 .8H7.7a1 1 0 0 1-1-.8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+      <span class="bolsa-btn__n" data-bolsa-n hidden>0</span>
+    </button>
+    <button type="button" class="menu-btn" data-menu-abrir aria-label="Abrir menú" aria-expanded="false" aria-controls="menu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="menu" id="menu" hidden>
+  <div class="menu__pat" aria-hidden="true"></div>
+  <button type="button" class="menu__x" data-menu-cerrar aria-label="Cerrar menú"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  <img class="menu__tita" src="img/tita.svg" alt="" width="132" height="152">
+  <nav class="menu__nav" aria-label="Menú">
+    <a href="#ahora">Ahora en Rosie</a>
+    <a href="#carta">Carta del mes</a>
+    <a href="#armar">Armá tu torta</a>
+    <a href="#llevar">Para llevar</a>
+    <a href="#cosas">Pasan cosas</a>
+    <a href="#visitanos">Visitanos</a>
+  </nav>
+  <p class="menu__pie">Mié a dom · 10:00 a 20:00 hs</p>
+</div>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="inicio">
+  <div class="hero__pat" aria-hidden="true"></div>
+  <div class="hero__in">
+    <div class="hero__txt">
+      <p class="hero__kicker ent" style="--d:0">Comida de abuela<span class="solo-desk"> · Saavedra</span> · Desde 2022</p>
+      <h1 class="hero__t">
+        <span class="linea"><span class="ent" style="--d:1">Café, vinito <i class="y">y</i></span></span>
+        <span class="linea"><span class="ent" style="--d:2">pastelería</span></span>
+      </h1>
+      <p class="hero__bajada ent" style="--d:3">Desayunos hasta las 12:30 hs, almuerzos con menú ejecutivo y una vitrina que cambia cada temporada. Todo hecho en el momento, con mucho amor.</p>
+      <ul class="hero__chips ent" style="--d:4">
+        <li data-estado-chip>Mié a dom · 10:00 a 20:00 hs</li>
+        <li class="solo-desk">Terraza arriba</li>
+        <li class="solo-desk">Ruiz Huidobro 3049</li>
+      </ul>
+      <div class="hero__ctas ent" style="--d:5">
+        <a class="btn btn--bordo btn--xl" href="#carta">Ver la carta del mes</a>
+        <a class="btn btn--linea btn--xl" href="#armar">Armá tu torta</a>
+      </div>
+    </div>
+    <div class="hero__foto">
+      <figure class="ovalo ovalo--hero">
+        <picture>
+          <source media="(min-width: 900px)" srcset="img/f/hero-torta-520.webp 520w, img/f/hero-torta-960.webp 960w" sizes="460px">
+          <img src="img/f/hero-mesa-480.webp" srcset="img/f/hero-mesa-480.webp 480w, img/f/hero-mesa-800.webp 800w" sizes="260px" alt="Torta de Rosie con higos, frutos rojos y flores sobre la mesa verde" width="480" height="640" fetchpriority="high" decoding="async">
+        </picture>
+      </figure>
+      <img class="hero__tita" src="img/tita.svg" alt="" width="132" height="152" aria-hidden="true">
+      <div class="hero__sello" aria-hidden="true"><span>Carta</span><i>Primavera</i><span>2026</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AHORA EN ROSIE (el reloj) ============ -->
+<section class="seccion ahora" id="ahora">
+  <div class="caja">
+    <header class="cab rv">
+      <p class="kicker">Ahora en Rosie</p>
+      <h2 class="titulo" data-ahora-titulo>¿Qué hay ahora?</h2>
+      <p class="cab__sub" data-ahora-sub>La carta va cambiando con el día, como la de la casa de la abuela.</p>
+    </header>
+    <div class="momentos rv" data-momentos>
+      <article class="momento" data-momento="desayuno">
+        <figure class="momento__foto"><img src="img/f/desayuno-480.webp" alt="Huevos revueltos con medialunas, café y jugo" width="480" height="640" loading="lazy" decoding="async"></figure>
+        <div class="momento__txt">
+          <p class="momento__hs">10:00 a 12:30 hs</p>
+          <h3>Desayunos</h3>
+          <p>Huevos revueltos con medialuna o el plato completo, con café y vasito de jugo del día.</p>
+          <button type="button" class="link-flecha" data-ir-cat="desayunos">Ver desayunos</button>
+        </div>
+      </article>
+      <article class="momento" data-momento="almuerzo">
+        <figure class="momento__foto"><img src="img/f/almuerzo-480.webp" alt="Sándwich de pollo 3.0 en pan shokupan" width="480" height="640" loading="lazy" decoding="async"></figure>
+        <div class="momento__txt">
+          <p class="momento__hs">12:30 a 16:00 hs</p>
+          <h3>Almuerzos</h3>
+          <p data-ejecutivo>Mbejú, Caesar y el sándwich 3.0. Menú ejecutivo de miércoles a viernes, $27.000.</p>
+          <button type="button" class="link-flecha" data-ir-cat="almuerzos">Ver almuerzos</button>
+        </div>
+      </article>
+      <article class="momento" data-momento="merienda">
+        <figure class="momento__foto"><img src="img/f/merienda-480.webp" alt="Merienda en la mesa: café, budín y pastelería" width="480" height="496" loading="lazy" decoding="async"></figure>
+        <div class="momento__txt">
+          <p class="momento__hs">16:00 a 20:00 hs</p>
+          <h3>Merienda y vinito</h3>
+          <p>Medialunas, vasca, galletas y las promos con café. Y los vinos, de menor a mayor intensidad.</p>
+          <button type="button" class="link-flecha" data-ir-cat="pasteleria">Ver pastelería</button>
+        </div>
+      </article>
+      <article class="momento momento--cerrado" data-momento="cerrado">
+        <div class="momento__tita"><img src="img/tita.svg" alt="" width="132" height="152"></div>
+        <div class="momento__txt">
+          <p class="momento__hs">Lunes y martes</p>
+          <h3>Tita descansa</h3>
+          <p data-cerrado-txt>Abrimos de miércoles a domingo de 10:00 a 20:00 hs. Mientras, encargá tu torta.</p>
+          <a class="link-flecha" href="#armar">Armá tu torta</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CARTA DEL MES ============ -->
+<section class="seccion carta" id="carta">
+  <div class="caja">
+    <header class="cab cab--fila rv">
+      <div>
+        <p class="kicker">La carta del mes</p>
+        <h2 class="titulo">Carta <i class="script">Primavera</i> 2026</h2>
+      </div>
+      <p class="cab__sub">Ordenada por momento del día. La cambiamos todos los meses y siempre está acá, al día. <span class="leyenda"><b>V</b> vegetariano · <b>VG</b> vegano · <b>SG</b> sin gluten (no apto celíacos) · <span class="punto" aria-hidden="true"></span> tiene foto</span></p>
+    </header>
+    <div class="carta-grid rv">
+      <div class="carta-kit" id="carta-kit" data-kit="carta" data-kit-pedir="false" aria-busy="true"></div>
+      <aside class="carta-foto" aria-hidden="true">
+        <figure class="ovalo ovalo--carta"><img data-foto-img src="img/f/sandwich-700.webp" alt="" width="700" height="933" loading="lazy" decoding="async"></figure>
+        <p class="carta-foto__nom" data-foto-nom>Sándwich de pollo 3.0</p>
+      </aside>
+    </div>
+    <p class="carta-pie rv">No aceptamos tarjetas de crédito: sí débito y transferencias. Pagando en efectivo, 5 % de descuento (: <a href="carta/">Abrir la carta del QR</a></p>
+  </div>
+</section>
+
+<!-- ============ ARMÁ TU TORTA ============ -->
+<section class="seccion tortas" id="tortas">
+  <div class="caja">
+    <header class="cab rv" id="armar">
+      <p class="kicker">Tortas enteras, a pedido</p>
+      <h2 class="titulo">Armá tu torta de <i class="script">cumpleañitos</i></h2>
+      <p class="cab__sub">Elegís bizcocho, crema y rellenos, y la deco la inspira la pastelera: frutas, flores, hierbas y picos rizados. Rinde 15 a 20 porciones. Se encarga con 48 hs y se confirma con el 50 % de seña.</p>
+    </header>
+
+    <div class="armar rv">
+      <div class="armar__escena">
+        <div class="torta" data-torta aria-hidden="true">
+          <div class="torta__plato"></div>
+          <div class="torta__capas" data-capas></div>
+          <div class="torta__tope" data-tope></div>
+        </div>
+        <img class="armar__tita" src="img/tita.svg" alt="" width="132" height="152" aria-hidden="true">
+        <div class="armar__resumen">
+          <p class="armar__nom">Tu cumpleañitos</p>
+          <p class="armar__det" data-detalle aria-live="polite"></p>
+        </div>
+      </div>
+
+      <div class="armar__pasos" data-pasos>
+        <div class="armar__nav-cel" aria-hidden="true"><span data-paso-txt>Paso 1 de 5</span><span class="armar__puntos" data-puntos></span></div>
+        <div class="armar__carril" data-carril>
+          <fieldset class="paso" data-grupo="bizcocho"><legend><span>1</span> Bizcocho</legend><div class="chips" data-chips="bizcocho"></div></fieldset>
+          <fieldset class="paso" data-grupo="crema"><legend><span>2</span> Crema</legend><div class="chips" data-chips="crema"></div></fieldset>
+          <fieldset class="paso" data-grupo="relleno"><legend><span>3</span> Relleno</legend><div class="chips" data-chips="relleno"></div></fieldset>
+          <fieldset class="paso" data-grupo="extras"><legend><span>4</span> Extras <small>(los que quieras)</small></legend><div class="chips" data-chips="extras"></div></fieldset>
+          <fieldset class="paso" data-grupo="dia"><legend><span>5</span> ¿Cuándo la retirás?</legend><div class="dias" data-dias></div><p class="paso__nota" data-dias-nota>Mínimo 48 hs · lunes y martes cerrado</p></fieldset>
+        </div>
+        <div class="armar__pie">
+          <div class="armar__plata">
+            <span class="armar__total" data-total>Total $88.000</span>
+            <b class="armar__sena" data-sena>Seña $44.000</b>
+            <span class="armar__resto">El otro 50 % al retirar</span>
+          </div>
+          <div class="armar__btns">
+            <button type="button" class="btn btn--linea solo-cel" data-paso-sig>Siguiente</button>
+            <button type="button" class="btn btn--bordo btn--xl" data-reservar-torta>Reservar con seña</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="otras">
+      <div class="otras__cab rv">
+        <h3 class="subtitulo">Las otras tortas enteras</h3>
+        <p data-proximo>Se encargan con 48 hs de anticipación.</p>
+      </div>
+      <div class="tienda-kit tienda-kit--tortas" id="tortas-kit" data-kit="carta" data-kit-tienda="true" data-kit-categorias="t-tortas" aria-busy="true"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PARA LLEVAR ============ -->
+<section class="seccion llevar" id="llevar">
+  <div class="caja">
+    <header class="cab cab--fila rv">
+      <div>
+        <p class="kicker">Encargá y pasá a buscar</p>
+        <h2 class="titulo">Para llevar a casa</h2>
+      </div>
+      <p class="cab__sub">Medialunas (que salen pocas por día), galletas, porciones de vasca, granola y los vinos con 10 % off para llevar. Lo dejás encargado y lo retirás en el horario que elijas.</p>
+    </header>
+    <div class="tienda-kit tienda-kit--llevar rv" id="llevar-kit" data-kit="carta" data-kit-tienda="true" data-kit-categorias="t-llevar,t-vinos" aria-busy="true"></div>
+  </div>
+</section>
+
+<!-- ============ COSAS LINDAS PARA SABER ============ -->
+<section class="seccion saber" id="saber">
+  <div class="caja">
+    <div class="feston rv">
+      <h2 class="saber__t">Cosas lindas para saber de <img src="img/logo.svg" alt="Rosie" width="463" height="218"></h2>
+      <p class="saber__sub">(e importantes)</p>
+      <ul class="saber__lista">
+        <li>Si tenés alguna <b>alergia</b>, avisanos así lo tenemos en cuenta.</li>
+        <li>¿Venís a trabajar con la compu? La mesa es tuya hasta <b>2 horas</b>: Rosie es chiquito y queremos que todxs puedan disfrutarlo.</li>
+        <li><b>No aceptamos tarjetas de crédito</b>, pero sí débito y transferencias.</li>
+        <li>Pagando en <b>efectivo</b> tenés un 5 % de descuento (:</li>
+        <li>Si elegís sentarte en la <b>terraza</b>, hacé tu pedido en la caja y te lo subimos con gusto.</li>
+        <li>Todo lo preparamos en el momento y con mucho amor: puede llevar unos minutitos. <b>¡Prometemos que vale la pena!</b></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PASAN COSAS ============ -->
+<section class="seccion cosas" id="cosas">
+  <div class="caja">
+    <header class="cab cab--fila rv">
+      <div>
+        <p class="kicker">Pasan cosas en Rosie</p>
+        <h2 class="titulo">Talleres, jazz y <i class="script">bodas</i></h2>
+      </div>
+      <p class="cab__sub">El patio de Saavedra donde se festeja: anotate al próximo taller o consultá tu fecha para un evento privado.</p>
+    </header>
+    <div class="afiches rv" data-afiches>
+      <article class="afiche afiche--rosa" data-afiche-evento>
+        <figure class="afiche__foto"><img src="img/f/taller-500.webp" alt="Bandeja de medialunas recién horneadas" width="500" height="625" loading="lazy" decoding="async"></figure>
+        <div class="afiche__txt">
+          <p class="afiche__k" data-ev-fecha>Lunes 16/11 · 18:30 hs</p>
+          <h3 data-ev-nom>Taller de medialunas</h3>
+          <p data-ev-desc>Clase práctica + degustación con Trinidad Benedetti. El último del año.</p>
+          <p class="afiche__cupo" data-ev-cupo aria-live="polite">&nbsp;</p>
+          <button type="button" class="btn btn--bordo" data-ev-anotarme>Anotarme</button>
+        </div>
+      </article>
+      <article class="afiche afiche--bordo">
+        <figure class="afiche__foto"><img src="img/f/terraza-500.webp" alt="La terraza de Rosie con sándwiches y jugos" width="500" height="667" loading="lazy" decoding="async"></figure>
+        <div class="afiche__txt">
+          <p class="afiche__k">Terraza · 19:30 hs</p>
+          <h3>Rosie de noche</h3>
+          <p><i class="script">Jazz en vivo</i> en la terraza, platitos y vino. Sin reservas, a la gorra.</p>
+          <a class="btn btn--crema" href="https://www.instagram.com/rosiecafe__/" target="_blank" rel="noopener">Próxima fecha en IG</a>
+        </div>
+      </article>
+      <article class="afiche afiche--masita">
+        <figure class="afiche__foto"><img src="img/f/locro-500.webp" alt="Olla de locro de la abuela" width="500" height="625" loading="lazy" decoding="async"></figure>
+        <div class="afiche__txt">
+          <p class="afiche__k">Fechas patrias</p>
+          <h3>El locro de la abu</h3>
+          <p>La abuela Elisa vuelve cada 25 de mayo y 9 de julio: locro, guiso, empanadas y pastelitos (y Tita).</p>
+          <a class="btn btn--bordo" href="https://www.instagram.com/rosiecafe__/" target="_blank" rel="noopener">Seguinos en IG</a>
+        </div>
+      </article>
+      <article class="afiche afiche--verde">
+        <figure class="afiche__foto"><img src="img/f/boda-500.webp" alt="Torta de boda de dos pisos con flores" width="500" height="667" loading="lazy" decoding="async"></figure>
+        <div class="afiche__txt">
+          <p class="afiche__k">Rosie bodas</p>
+          <h3>Bodas, catering y eventos</h3>
+          <p>Nos escribís con tiempo y armamos algo rico, lindo y bonito: mesa de tortas, catering o el local para ustedes.</p>
+          <button type="button" class="btn btn--crema" data-consultar-evento>Consultar fecha</button>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LA MESA VERDE (galería) ============ -->
+<section class="seccion galeria" id="galeria">
+  <div class="caja">
+    <header class="cab rv">
+      <p class="kicker">La mesa verde</p>
+      <h2 class="titulo">Así se ve una tarde en Rosie</h2>
+      <p class="cab__sub solo-cel">Deslizá las fotos con el dedo.</p>
+    </header>
+    <div class="mazo" data-mazo>
+      <figure class="foto-g" style="--r:-3deg"><img src="img/f/g-huevos-480.webp" srcset="img/f/g-huevos-480.webp 480w, img/f/g-huevos-900.webp 900w" sizes="(min-width: 900px) 25vw, 78vw" alt="Desayuno sobre la mesa verde" width="480" height="640" loading="lazy" decoding="async" draggable="false"></figure>
+      <figure class="foto-g" style="--r:2deg"><img src="img/f/g-tortas-480.webp" srcset="img/f/g-tortas-480.webp 480w, img/f/g-tortas-900.webp 900w" sizes="(min-width: 900px) 25vw, 78vw" alt="Bandeja con medialuna, scone y tartas" width="480" height="600" loading="lazy" decoding="async" draggable="false"></figure>
+      <figure class="foto-g foto-g--ovalo" style="--r:0deg"><img src="img/f/g-tarta-480.webp" srcset="img/f/g-tarta-480.webp 480w, img/f/g-tarta-900.webp 900w" sizes="(min-width: 900px) 25vw, 78vw" alt="Tarta tibia de frutas con crema y cold brew" width="480" height="558" loading="lazy" decoding="async" draggable="false"></figure>
+      <figure class="foto-g" style="--r:-2deg"><img src="img/f/g-mini-480.webp" srcset="img/f/g-mini-480.webp 480w, img/f/g-mini-900.webp 900w" sizes="(min-width: 900px) 25vw, 78vw" alt="Mini torta con jugo y café en la mesa verde" width="480" height="600" loading="lazy" decoding="async" draggable="false"></figure>
+      <figure class="foto-g" style="--r:3deg"><img src="img/f/g-banco-480.webp" srcset="img/f/g-banco-480.webp 480w, img/f/g-banco-900.webp 900w" sizes="(min-width: 900px) 25vw, 78vw" alt="Tres porciones de torta en el banco rosa de la vereda" width="480" height="640" loading="lazy" decoding="async" draggable="false"></figure>
+      <figure class="foto-g" style="--r:-1deg"><img src="img/f/g-pasteleria-480.webp" srcset="img/f/g-pasteleria-480.webp 480w, img/f/g-pasteleria-937.webp 937w" sizes="(min-width: 900px) 25vw, 78vw" alt="Mesa de pastelería vista desde arriba" width="480" height="600" loading="lazy" decoding="async" draggable="false"></figure>
+      <figure class="foto-g" style="--r:2deg"><img src="img/f/g-libros-480.webp" srcset="img/f/g-libros-480.webp 480w, img/f/g-libros-900.webp 900w" sizes="(min-width: 900px) 25vw, 78vw" alt="El estante de libros de Rosie" width="480" height="549" loading="lazy" decoding="async" draggable="false"></figure>
+      <figure class="foto-g" style="--r:-3deg"><img src="img/f/g-ventana-480.webp" srcset="img/f/g-ventana-480.webp 480w, img/f/g-ventana-720.webp 720w" sizes="(min-width: 900px) 25vw, 78vw" alt="Mesa verde junto al ventanal con tortas y cafés" width="480" height="640" loading="lazy" decoding="async" draggable="false"></figure>
+    </div>
+    <div class="mazo-pie solo-cel"><span data-mazo-n>1 / 8</span><button type="button" class="btn btn--linea btn--chico" data-mazo-sig>Siguiente foto</button></div>
+  </div>
+</section>
+
+<!-- ============ VISITANOS ============ -->
+<section class="seccion visitanos" id="visitanos">
+  <div class="caja visitanos__grid">
+    <div class="visitanos__txt rv">
+      <img class="visitanos__tita" src="img/tita.svg" alt="Tita Galletita, la recepcionista" width="132" height="152">
+      <p class="kicker">Visitanos</p>
+      <h2 class="titulo">Te recibe Tita</h2>
+      <p class="visitanos__bajada">Tita Galletita es la recepcionista, gerenta y responsable del control de calidad de todo lo que se cae al piso. Te espera en una callecita de Saavedra.</p>
+      <dl class="datos">
+        <div><dt>Dirección</dt><dd>Ruiz Huidobro 3049, Saavedra (CABA)</dd></div>
+        <div><dt>Horario</dt><dd>Miércoles a domingo · 10:00 a 20:00 hs<br>Desayunos hasta las 12:30 hs · almuerzos de 12:30 a 16:00 hs</dd></div>
+        <div><dt>Ahora</dt><dd data-estado>&nbsp;</dd></div>
+      </dl>
+      <div class="visitanos__btns">
+        <a class="btn btn--bordo" href="https://www.google.com/maps/dir/?api=1&amp;destination=Ruiz+Huidobro+3049,+Saavedra,+Buenos+Aires" target="_blank" rel="noopener">Cómo llegar</a>
+        <a class="btn btn--linea" href="https://www.instagram.com/rosiecafe__/" target="_blank" rel="noopener">@rosiecafe__</a>
+      </div>
+    </div>
+    <div class="mapa rv">
+      <iframe title="Mapa: Rosie Café, Ruiz Huidobro 3049, Saavedra" src="https://www.google.com/maps?q=Ruiz+Huidobro+3049,+Saavedra,+Buenos+Aires&amp;z=16&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="pie">
+  <div class="caja pie__in">
+    <div class="pie__marca">
+      <img src="img/logo-claro.svg" alt="Rosie Café" width="463" height="218">
+      <p>Comida de abuela · Café, vinito <i class="y">y</i> pastelería · desde 2022</p>
+    </div>
+    <div class="pie__col">
+      <p class="pie__t">Horario</p>
+      <p>Miércoles a domingo<br>10:00 a 20:00 hs</p>
+    </div>
+    <div class="pie__col">
+      <p class="pie__t">Dónde</p>
+      <p>Ruiz Huidobro 3049<br>Saavedra, CABA</p>
+    </div>
+    <div class="pie__col">
+      <p class="pie__t">Rosie</p>
+      <p><a href="https://www.instagram.com/rosiecafe__/" target="_blank" rel="noopener">Instagram</a><br><a href="carta/">Carta del QR</a></p>
+    </div>
+  </div>
+  <p class="pie__credito">Sitio desarrollado por <a href="https://alejomfernandez.com.ar" target="_blank" rel="noopener">Alejo Martín Fernández</a></p>
+</footer>
+
+<script type="module" src="js/main.js?v=1"></script>
+</body>
+</html>
