@@ -617,3 +617,90 @@ p { margin: 0; }
   .hero__ctas { flex-direction: row; }
   .hero__chips { justify-content: flex-start; }
 }
+
+/* =========================================================
+   ARMÁ TU TORTA · el juego (reemplaza al formulario largo)
+   ========================================================= */
+.juego { background: var(--papel); border-radius: 30px; overflow: hidden; display: grid; grid-template-columns: minmax(0, 1fr); box-shadow: 0 30px 60px -40px rgba(90, 15, 28, .5); }
+.juego__escena { position: relative; background: var(--rosa); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 18px 20px 12px; min-height: 268px; transition: background-color .3s; touch-action: none; }
+.juego__escena::before { content: ''; position: absolute; inset: 0; opacity: .12; background: url(../img/tita-claro.svg) 0 0 / 66px auto repeat; pointer-events: none; }
+.juego__escena::after { content: ''; position: absolute; inset: 14px; border: 3px dashed transparent; border-radius: 22px; pointer-events: none; transition: border-color .2s, background-color .2s; }
+.juego__escena.espera::after { border-color: rgba(90, 15, 28, .35); }
+.juego__escena.apunta::after { border-color: var(--bordo); background: rgba(255, 246, 241, .18); }
+.torta-svg { position: relative; width: 100%; max-width: 270px; height: auto; aspect-ratio: 320 / 300; overflow: visible; }
+.juego__tita { position: absolute; right: 14px; top: 14px; width: 58px; height: auto; padding: 5px; background: var(--masita); border-radius: 50%; transform: rotate(12deg); }
+.juego__pista { position: relative; font-weight: 600; font-size: 14.5px; text-align: center; min-height: 1.5em; margin-top: 4px; }
+.torta-svg .cae { animation: t-cae .6s var(--rebote) both; animation-delay: calc(var(--k, 0) * 60ms); }
+.torta-svg .t-tapa.cae.tarde { animation-delay: .3s; }
+.torta-svg .t-fruta.cae { animation-duration: .5s; animation-delay: calc(var(--k, 0) * 45ms); }
+@keyframes t-cae { from { transform: translateY(-150px); opacity: 0; } 55% { opacity: 1; } }
+.torta-svg .brilla { animation: t-brilla .6s var(--ease); }
+@keyframes t-brilla { 40% { filter: brightness(1.35) saturate(1.2); } }
+.torta-svg.rebota .t-cuerpo, .torta-svg.rebota .t-tapa { animation: t-rebota .5s var(--rebote); transform-origin: 160px 262px; }
+@keyframes t-rebota { 35% { transform: scale(1.04, .95); } 70% { transform: scale(.98, 1.03); } }
+
+.juego__panel { display: flex; flex-direction: column; gap: 12px; padding: 18px 20px 20px; min-width: 0; }
+.juego__pasos { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: 6px; }
+.juego__pasos li { display: flex; align-items: center; flex: 1; }
+.juego__pasos li:not(:last-child)::after { content: ''; flex: 1; height: 2px; background: var(--borde); margin-left: 6px; }
+.pp { width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--borde); background: var(--papel); color: #a3757b; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; flex-shrink: 0; transition: background-color .25s, color .25s, border-color .25s, transform .3s var(--rebote); }
+.pp.hecho { border-color: var(--bordo); color: var(--bordo); background: var(--masita); }
+.pp.on { background: var(--bordo); border-color: var(--bordo); color: var(--papel); transform: scale(1.12); }
+.pp::before { content: ''; position: absolute; width: 44px; height: 44px; }
+.juego__t { font-family: var(--f-tit); text-transform: uppercase; font-size: 30px; line-height: 1; margin-bottom: 12px; }
+.juego__paso { min-height: 168px; }
+.fichas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.fichas[data-grupo='dia'] { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.ficha { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 8px 4px 6px; border: 0; background: none; cursor: grab; border-radius: 18px; touch-action: none; user-select: none; -webkit-user-select: none; transition: transform .25s var(--rebote); }
+.ficha:active { cursor: grabbing; transform: scale(.94); }
+.ficha__bola { position: relative; width: 64px; height: 64px; border-radius: 50%; border: 3px solid var(--bordo); box-shadow: inset 0 -8px 0 rgba(0, 0, 0, .12), 0 6px 0 -1px rgba(90, 15, 28, .2); display: flex; align-items: center; justify-content: center; transition: transform .3s var(--rebote), box-shadow .3s; }
+.ficha[aria-checked='true'] .ficha__bola, .ficha[aria-pressed='true'] .ficha__bola { box-shadow: 0 0 0 4px var(--papel), 0 0 0 7px var(--bordo), inset 0 -8px 0 rgba(0, 0, 0, .12); transform: scale(1.04); }
+.ficha__ok { width: 24px; height: 24px; border-radius: 50%; background: var(--papel); border: 2px solid var(--bordo); position: relative; animation: pop .35s var(--rebote); }
+.ficha__ok::after { content: ''; position: absolute; left: 7px; top: 3px; width: 6px; height: 11px; border: solid var(--bordo); border-width: 0 2.5px 2.5px 0; transform: rotate(45deg); }
+@keyframes pop { from { transform: scale(0); } }
+.ficha__n { font-weight: 700; font-size: 14.5px; line-height: 1.2; text-align: center; }
+.ficha__s { font-size: 12.5px; line-height: 1.2; text-align: center; min-height: 1.2em; color: #7d4a52; }
+@media (hover: hover) { .ficha:hover .ficha__bola { transform: translateY(-4px) rotate(-6deg); } }
+.ficha__ghost { position: fixed; left: 0; top: 0; z-index: 300; pointer-events: none; box-shadow: 0 18px 28px -8px rgba(90, 15, 28, .55); }
+.fichas.entra > * { animation: ficha-in .45s var(--rebote) both; animation-delay: calc(var(--i, 0) * 60ms); }
+@keyframes ficha-in { from { opacity: 0; transform: translateY(18px) scale(.9); } }
+.ficha-dia { min-height: 56px; border-radius: 14px; border: 2px solid var(--bordo); background: var(--papel); cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.15; font-size: 13px; font-weight: 600; padding: 4px; }
+.ficha-dia b { font-size: 18px; }
+.ficha-dia[aria-checked='true'] { background: var(--bordo); color: var(--papel); }
+.ficha-dia[disabled] { opacity: .35; cursor: not-allowed; border-style: dashed; }
+.juego__det { font-size: 13.5px; line-height: 1.45; min-height: 2.9em; color: #7d4a52; }
+.juego__pie { display: flex; align-items: center; gap: 10px; border-top: 2px dashed var(--bordo); padding-top: 14px; }
+.juego__plata { display: flex; flex-direction: column; margin-right: auto; line-height: 1.15; min-width: 0; }
+.juego__plata span { font-size: 13.5px; }
+.juego__plata b { font-family: var(--f-tit); text-transform: uppercase; font-size: 26px; white-space: nowrap; }
+.juego__pie .btn { padding: 0 16px; min-height: 50px; font-size: 15px; }
+.juego__cta.lista { animation: latido 1.6s var(--ease) infinite; }
+@keyframes latido { 0%, 100% { box-shadow: 0 0 0 0 rgba(90, 15, 28, .35); } 50% { box-shadow: 0 0 0 8px rgba(90, 15, 28, 0); } }
+@media (max-width: 380px) { .juego__pie { flex-wrap: wrap; } .juego__plata { flex-basis: 100%; flex-direction: row; gap: 10px; align-items: baseline; } .juego__pie .btn { flex: 1; } }
+@media (min-width: 900px) {
+  .juego { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); min-height: 520px; }
+  .juego__escena { padding: 30px; }
+  .torta-svg { max-width: 420px; }
+  .juego__tita { width: 92px; padding: 8px; right: 24px; top: 24px; }
+  .juego__pista { font-size: 16px; margin-top: 10px; }
+  .juego__panel { padding: 34px 40px 30px; gap: 16px; justify-content: center; }
+  .juego__t { font-size: 40px; margin-bottom: 18px; }
+  .juego__paso { min-height: 200px; }
+  .fichas { gap: 14px; }
+  .ficha__bola { width: 84px; height: 84px; }
+  .ficha__n { font-size: 15.5px; }
+  .fichas[data-grupo='dia'] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .juego__plata b { font-size: 32px; }
+  .juego__pie .btn { min-height: 54px; padding: 0 22px; font-size: 16px; }
+}
+@media (prefers-reduced-motion: reduce) { .juego__cta.lista { animation: none; } }
+@media (max-width: 899px) {
+  .juego__pie { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; }
+  .juego__plata { grid-column: 1 / -1; flex-direction: row; justify-content: space-between; align-items: baseline; margin: 0; }
+  .juego__pie .btn { width: 100%; }
+  .juego__sig[hidden] + .juego__cta { grid-column: 1 / -1; }
+  .juego__det { min-height: 4.35em; }
+}
+@media (max-width: 380px) { .juego__pie { flex-wrap: nowrap; } .juego__plata { gap: 0; } }
+.tapa-pill .kit-demo-pill { opacity: 0; transform: translateY(20px); pointer-events: none; }
+@media (min-width: 900px) { .tapa-pill .kit-demo-pill { opacity: 1; transform: none; pointer-events: auto; } }

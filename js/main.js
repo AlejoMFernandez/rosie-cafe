@@ -59,6 +59,8 @@ $$('.rv').forEach((el) => (io ? io.observe(el) : el.classList.add('visto')));
 /* ---------- la píldora del panel no tapa los botones del hero en el celu ---------- */
 const heroCtas = $('.hero__ctas');
 if (io && heroCtas) new IntersectionObserver(([e]) => html.classList.toggle('en-hero', e.isIntersecting), { threshold: 0 }).observe(heroCtas);
+const juegoEl = $('[data-juego]');
+if (io && juegoEl) new IntersectionObserver(([e]) => html.classList.toggle('tapa-pill', e.isIntersecting), { threshold: 0 }).observe(juegoEl);
 
 /* ---------- barra ---------- */
 const barra = $('[data-barra]');
@@ -365,70 +367,159 @@ $$('[data-ir-cat]').forEach((b) => b.addEventListener('click', () => {
 }));
 
 /* =========================================================
-   ARMÁ TU TORTA
+   ARMÁ TU TORTA · un juego de 5 pasos, uno por vez
    ========================================================= */
 const ID_TORTA = 't-cumple';
-const COLOR = {
-  bizcocho: { cacao: '#6B3A2A', vainilla: '#E6C285', coco: '#F2E4C4' },
-  crema: { queso: '#FFF6F1', chantilly: '#FFF0D6' },
-  relleno: { ddl: '#C98A3E', frambuesa: '#B8324A', ambos: 'linear-gradient(90deg,#C98A3E 0 50%,#B8324A 50% 100%)' },
+const BORDO = '#5A0F1C';
+const FICHAS = {
+  bizcocho: { t: 'Elegí el bizcocho', pista: 'Tocá un bizcocho o arrastralo a la torta', v: {
+    cacao: { n: 'Cacao', s: 'Nube de avellanas', c: '#6B3A2A' },
+    vainilla: { n: 'Vainilla', s: 'Nube de avellanas', c: '#E2BD7E' },
+    coco: { n: 'Coco', s: 'Chiffón', c: '#F2E4C4' } } },
+  crema: { t: '¿Con qué crema?', pista: 'Ahora la crema que la cubre', v: {
+    queso: { n: 'Crema de queso', c: '#FFF8F2' },
+    chantilly: { n: 'Chantilly', s: 'De vainilla', c: '#FFEFCF' } } },
+  relleno: { t: 'El relleno', pista: 'Lo que va entre los pisos', v: {
+    ddl: { n: 'Dulce de leche', c: '#C98A3E' },
+    frambuesa: { n: 'Frambuesa', c: '#B8324A' },
+    ambos: { n: 'Los dos', c: 'split' } } },
+  extras: { t: 'Sumale extras', pista: 'Tocá los que quieras (o ninguno)', v: {
+    cremoso: { n: 'Cremoso de choco', c: '#3A1E16' },
+    frutas: { n: 'Frutillas', c: '#C0283E' },
+    ganache: { n: 'Piso de ganache', c: '#7A4A2E' } } },
+  dia: { t: '¿Cuándo la retirás?', pista: 'Mínimo 48 hs · lunes y martes cerrado' },
 };
-const torta = { opc: {}, extras: new Set(), fecha: null, franja: null };
+const ORDEN = ['bizcocho', 'crema', 'relleno', 'extras', 'dia'];
+const torta = { opc: {}, extras: new Set(), fecha: null, franja: null, paso: 0, vistos: new Set([0]) };
 let prodTorta = null;
-const capasEl = $('[data-capas]');
-const topeEl = $('[data-tope]');
-const tortaEl = $('[data-torta]');
+let diasTorta = [];
+const svg = $('[data-torta-svg]');
+const escena = $('[data-escena]');
+const fichasEl = $('[data-fichas]');
+const pasosEl = $('[data-pasos]');
+
+/* ---------- la torta (SVG con trazo de sticker, como sus ilustraciones) ---------- */
+const CX = 160, RX = 108, RY = 24, BASE = 262;
+function banda(y1, y2, fill, extra = '') {
+  const x0 = CX - RX, x1 = CX + RX;
+  return `<path d="M${x0},${y1} L${x0},${y2} A${RX},${RY} 0 0 0 ${x1},${y2} L${x1},${y1} A${RX},${RY} 0 0 1 ${x0},${y1} Z" fill="${fill}" stroke="${BORDO}" stroke-width="3" stroke-linejoin="round" ${extra}/>`;
+}
+function puntoBorde(t, k = 1, dy = 0, top) { return [CX + RX * k * Math.cos(t), top + RY * k * Math.sin(t) + dy]; }
+function merengue(x, y, c, s = 1) {
+  return `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${s})"><path d="M-13,7 C-15,-4 -6,-9 -2,-17 C1,-12 3,-10 6,-9 C12,-6 15,0 13,7 Z" fill="${c}" stroke="${BORDO}" stroke-width="2.6" stroke-linejoin="round"/><path d="M-7,3 C-6,-3 -2,-6 0,-11" fill="none" stroke="${BORDO}" stroke-width="1.8" stroke-linecap="round" opacity=".55"/></g>`;
+}
+function frutilla(x, y, r = 0) {
+  return `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${r})"><path d="M0,13 C-9,6 -11,-1 -9,-5 C-7,-9 -2,-9 0,-7 C2,-9 7,-9 9,-5 C11,-1 9,6 0,13 Z" fill="#D8344B" stroke="${BORDO}" stroke-width="2.4" stroke-linejoin="round"/><circle cx="-3" cy="0" r="1" fill="#FFE7A8"/><circle cx="3" cy="2" r="1" fill="#FFE7A8"/><circle cx="0" cy="6" r="1" fill="#FFE7A8"/><path d="M-6,-7 L-2,-11 L0,-7 L2,-11 L6,-7" fill="#5C8049" stroke="${BORDO}" stroke-width="2" stroke-linejoin="round"/></g>`;
+}
+function arandano(x, y) { return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="5.5" fill="#3E4B8A" stroke="${BORDO}" stroke-width="2.2"/><circle cx="${(x - 1.6).toFixed(1)}" cy="${(y - 1.8).toFixed(1)}" r="1.3" fill="#fff" opacity=".6"/>`; }
+function florcita(x, y) { return `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)})">${[0, 72, 144, 216, 288].map((a) => `<ellipse cx="0" cy="-5" rx="3.4" ry="5" fill="#F5C1A2" stroke="${BORDO}" stroke-width="1.6" transform="rotate(${a})"/>`).join('')}<circle r="3" fill="#E2BD7E" stroke="${BORDO}" stroke-width="1.6"/></g>`; }
+
+function dibujarTorta(anim = null) {
+  const bz = FICHAS.bizcocho.v[torta.opc.bizcocho]?.c || '#6B3A2A';
+  const cr = FICHAS.crema.v[torta.opc.crema]?.c || '#FFF8F2';
+  const rl = torta.opc.relleno;
+  const cremoso = torta.extras.has('cremoso'), ganache = torta.extras.has('ganache'), frutas = torta.extras.has('frutas');
+  const capas = [{ id: 'bz1', h: 50, c: bz, pat: true }, { id: 'rl1', h: 12, c: rl === 'ambos' ? 'url(#rl-ambos)' : (FICHAS.relleno.v[rl]?.c || '#C98A3E') }];
+  if (cremoso) capas.push({ id: 'cremoso', h: 9, c: '#3A1E16' });
+  capas.push({ id: 'bz2', h: ganache ? 36 : 46, c: bz, pat: true });
+  if (ganache) { capas.push({ id: 'ganache', h: 14, c: '#7A4A2E' }); capas.push({ id: 'bz3', h: 30, c: bz, pat: true }); }
+  capas.push({ id: 'cobertura', h: 16, c: cr });
+  let y = BASE, out = '';
+  const grupos = [];
+  capas.forEach((k, i) => {
+    const y2 = y, y1 = y - k.h; y = y1;
+    grupos.push(`<g class="t-capa" data-capa="${k.id}" style="--k:${i}">${banda(y1, y2, k.c)}${k.pat ? banda(y1, y2, 'url(#puntos)', 'stroke="none"') : ''}</g>`);
+  });
+  const top = y;
+  // tapa (elipse) + picos alrededor + frutas en el centro, de atrás para adelante
+  const N = 11, picos = [];
+  for (let i = 0; i < N; i++) { const t = (i / N) * Math.PI * 2 + 0.15; const [px, py] = puntoBorde(t, 0.9, -2, top); picos.push({ t, px, py }); }
+  const atras = picos.filter((p) => Math.sin(p.t) < 0).sort((a, b) => a.py - b.py);
+  const adelante = picos.filter((p) => Math.sin(p.t) >= 0).sort((a, b) => a.py - b.py);
+  let deco = '';
+  if (frutas) {
+    const pos = [[-38, -4, -12], [0, -9, 4], [38, -3, 14], [-18, 6, 8], [20, 7, -8]];
+    deco += pos.map(([dx, dy, r], i) => `<g class="t-fruta" style="--k:${i}">${frutilla(CX + dx, top + dy - 6, r)}</g>`).join('');
+    deco += [[-56, 2], [56, 3], [-2, 12], [-28, -12], [30, -13]].map(([dx, dy], i) => `<g class="t-fruta" style="--k:${i + 5}">${arandano(CX + dx, top + dy - 2)}</g>`).join('');
+  } else {
+    deco += [[-26, -2], [0, 4], [26, -2]].map(([dx, dy], i) => `<g class="t-fruta" style="--k:${i}">${florcita(CX + dx, top + dy - 2)}</g>`).join('');
+  }
+  out += `<defs>
+      <pattern id="puntos" width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.3" fill="rgba(255,246,241,.22)"/></pattern>
+      <linearGradient id="rl-ambos" x1="0" x2="1"><stop offset="0" stop-color="#C98A3E"/><stop offset=".5" stop-color="#C98A3E"/><stop offset=".5" stop-color="#B8324A"/><stop offset="1" stop-color="#B8324A"/></linearGradient>
+    </defs>
+    <ellipse cx="${CX}" cy="${BASE + 8}" rx="142" ry="26" fill="#FFF6F1" stroke="${BORDO}" stroke-width="3"/>
+    <ellipse cx="${CX}" cy="${BASE + 4}" rx="118" ry="18" fill="rgba(90,15,28,.12)"/>
+    <g class="t-cuerpo">${grupos.join('')}</g>
+    <g class="t-tapa" data-tapa>
+      <ellipse cx="${CX}" cy="${top}" rx="${RX}" ry="${RY}" fill="${cr}" stroke="${BORDO}" stroke-width="3"/>
+      ${atras.map((p) => merengue(p.px, p.py, cr, 0.95)).join('')}
+      <g class="t-deco">${deco}</g>
+      ${adelante.map((p) => merengue(p.px, p.py, cr, 1.08)).join('')}
+    </g>`;
+  svg.innerHTML = out;
+  if (reduce || !anim) return;
+  const animar = (sel) => $$(sel, svg).forEach((g) => g.classList.add('cae'));
+  if (anim === 'bizcocho') { animar('.t-capa'); $('[data-tapa]', svg).classList.add('cae', 'tarde'); }
+  else if (anim === 'relleno') $$('[data-capa^="rl"]', svg).forEach((g) => g.classList.add('brilla'));
+  else if (anim === 'crema') animar('[data-tapa]');
+  else if (anim === 'frutas') animar('.t-fruta');
+  else if (anim === 'cremoso' || anim === 'ganache') { $$(`[data-capa="${anim}"]`, svg).forEach((g) => g.classList.add('brilla')); svg.classList.remove('rebota'); void svg.getBoundingClientRect(); svg.classList.add('rebota'); }
+}
+
+/* ---------- fichas y pasos ---------- */
+const swatch = (c) => c === 'split' ? 'background:linear-gradient(90deg,#C98A3E 0 50%,#B8324A 50% 100%)' : `background:${c}`;
+function pintarPasos() {
+  pasosEl.innerHTML = ORDEN.map((g, i) => `<li><button type="button" class="pp${i === torta.paso ? ' on' : ''}${torta.vistos.has(i) && i !== torta.paso ? ' hecho' : ''}" data-ir="${i}" aria-current="${i === torta.paso ? 'step' : 'false'}" aria-label="Paso ${i + 1}: ${FICHAS[g].t}"><span>${i + 1}</span></button></li>`).join('');
+}
+function pintarFichas(entrar = true) {
+  const g = ORDEN[torta.paso];
+  $('[data-paso-t]').textContent = `${torta.paso + 1}. ${FICHAS[g].t}`;
+  $('[data-pista]').textContent = FICHAS[g].pista;
+  fichasEl.dataset.grupo = g;
+  if (g === 'dia') {
+    fichasEl.innerHTML = diasTorta.map((c) => `<button type="button" class="ficha-dia" role="radio" aria-checked="${c.f === torta.fecha}" data-fecha="${c.f}" data-franja="${c.franja || ''}" ${c.ok ? '' : 'disabled'}><span>${DIAS_C[c.d.getDay()]}</span><b>${c.d.getDate()}</b></button>`).join('');
+  } else {
+    const extras = g === 'extras';
+    const precio = (id) => { const a = (prodTorta?.adicionales || []).find((x) => x.id === id); return a ? `+${plata(a.precio)}` : ''; };
+    fichasEl.innerHTML = Object.entries(FICHAS[g].v).map(([id, f], i) => {
+      const on = extras ? torta.extras.has(id) : torta.opc[g] === id;
+      return `<button type="button" class="ficha" style="--i:${i}" ${extras ? `aria-pressed="${on}"` : `role="radio" aria-checked="${on}"`} data-g="${g}" data-v="${id}">
+        <span class="ficha__bola" style="${swatch(f.c)}" aria-hidden="true">${on ? '<i class="ficha__ok"></i>' : ''}</span>
+        <span class="ficha__n">${esc(f.n)}</span><span class="ficha__s">${esc(extras ? precio(id) : f.s || '')}</span></button>`;
+    }).join('');
+  }
+  fichasEl.classList.toggle('entra', entrar && !reduce);
+  if (entrar && !reduce) { void fichasEl.offsetWidth; fichasEl.classList.add('entra'); }
+  const ultimo = torta.paso === ORDEN.length - 1;
+  $('[data-sig]').hidden = ultimo;
+  $('[data-reservar-torta]').classList.toggle('lista', ultimo);
+  pintarPasos();
+}
+function irPaso(i) {
+  torta.paso = Math.max(0, Math.min(ORDEN.length - 1, i));
+  torta.vistos.add(torta.paso);
+  pintarFichas();
+}
+let auto = 0;
+function elegir(g, v, desdeArrastre = false) {
+  clearTimeout(auto);
+  if (g === 'extras') { torta.extras.has(v) ? torta.extras.delete(v) : torta.extras.add(v); dibujarTorta(torta.extras.has(v) ? v : null); }
+  else { torta.opc[g] = v; dibujarTorta(g); }
+  pintarFichas(false);
+  pintarPlata();
+  if (g !== 'extras') auto = setTimeout(() => irPaso(torta.paso + 1), desdeArrastre ? 450 : 650);
+}
 
 async function leerTorta() {
   prodTorta = (await kit.store.getProductos()).find((p) => p.id === ID_TORTA) || null;
-  if (!prodTorta) { $('#armar')?.closest('section')?.querySelector('.armar')?.setAttribute('hidden', ''); return; }
-  for (const g of prodTorta.opciones || []) if (!g.valores.some((v) => v.id === torta.opc[g.id])) torta.opc[g.id] = g.valores[0].id;
+  if (!prodTorta) { $('[data-juego]')?.setAttribute('hidden', ''); return; }
+  for (const gr of prodTorta.opciones || []) if (!gr.valores.some((v) => v.id === torta.opc[gr.id])) torta.opc[gr.id] = gr.valores[0].id;
   for (const id of [...torta.extras]) if (!(prodTorta.adicionales || []).some((a) => a.id === id)) torta.extras.delete(id);
   if (!torta.iniciada) { torta.extras.add('frutas'); torta.iniciada = true; }
-  pintarChips();
-  pintarTorta(false);
-  pintarDias();
-}
-function pintarChips() {
-  for (const g of prodTorta.opciones || []) {
-    const cont = $(`[data-chips="${g.id}"]`); if (!cont) continue;
-    cont.setAttribute('role', 'radiogroup'); cont.setAttribute('aria-label', g.nombre);
-    cont.innerHTML = g.valores.map((v) => `<button type="button" class="chip" role="radio" aria-checked="${torta.opc[g.id] === v.id}" data-g="${esc(g.id)}" data-v="${esc(v.id)}">${esc(v.nombre)}</button>`).join('');
-  }
-  const ex = $('[data-chips="extras"]');
-  ex.innerHTML = (prodTorta.adicionales || []).map((a) => `<button type="button" class="chip" aria-pressed="${torta.extras.has(a.id)}" data-extra="${esc(a.id)}">${esc(a.nombre)}<small>+${plata(a.precio)}</small></button>`).join('');
-}
-function capa(c, h, k, cls = '') { return `<div class="capa ${cls}" style="--c:${c};--h:${h}px;--k:${k}"></div>`; }
-function pintarTorta(animar = true, quien = null) {
-  const g = matchMedia('(min-width: 900px)').matches ? 1.5 : 1;
-  const bz = COLOR.bizcocho[torta.opc.bizcocho] || '#6B3A2A';
-  const cr = COLOR.crema[torta.opc.crema] || '#FFF6F1';
-  const rl = COLOR.relleno[torta.opc.relleno] || '#C98A3E';
-  const cremoso = torta.extras.has('cremoso'), ganache = torta.extras.has('ganache'), frutas = torta.extras.has('frutas');
-  const H = (n) => Math.round(n * g);
-  const capas = [];
-  capas.push(capa(bz, H(46), 0, 'capa--base'));
-  capas.push(capa(rl, H(12), 1));
-  if (cremoso) capas.push(capa('#3A1E16', H(10), 2));
-  capas.push(capa(bz, H(42), 3));
-  if (ganache) { capas.push(capa('#7A4A2E', H(14), 4)); capas.push(capa(bz, H(38), 5)); }
-  capas.push(capa(cr, H(18), 6, 'capa--cubierta'));
-  capasEl.innerHTML = capas.join('');
-  const alto = capas.length ? [...capasEl.children].reduce((s, c) => s + parseFloat(c.style.getPropertyValue('--h')), 0) : 0;
-  topeEl.style.bottom = (12 * g + alto - 8) + 'px';
-  tortaEl.style.setProperty('--cr', cr);
-  const ancho = capasEl.clientWidth || 196 * g;
-  capasEl.style.setProperty('--g', g);
-  const nPicos = 6;
-  let tope = '';
-  for (let i = 0; i < nPicos; i++) tope += `<span class="pico" style="left:${(i * (ancho - 26 * g)) / (nPicos - 1) + 4}px;width:${30 * g}px;height:${26 * g}px"></span>`;
-  if (frutas) for (let i = 0; i < 5; i++) tope += `<span class="fruta" style="left:${18 + (i * (ancho - 40)) / 4}px;--k:${i};width:${20 * g}px;height:${20 * g}px;bottom:${18 * g}px"></span>${i % 2 ? `<span class="fruta fruta--hoja" style="left:${30 + (i * (ancho - 40)) / 4}px;--k:${i};bottom:${34 * g}px"></span>` : ''}`;
-  topeEl.innerHTML = tope;
-  if (animar && !reduce) {
-    const hijos = [...capasEl.children];
-    const desde = quien === 'crema' ? hijos.length - 1 : quien === 'relleno' ? 1 : quien === 'extras' ? 2 : 0;
-    hijos.forEach((c, i) => { if (i >= desde) c.classList.add('cae'); });
-  } else topeEl.querySelectorAll('.fruta').forEach((f) => { f.style.animation = 'none'; });
+  calcularDias();
+  dibujarTorta(null);
+  pintarFichas(false);
   pintarPlata();
 }
 function lineaTorta() { return { opc: { ...torta.opc }, extras: [...torta.extras] }; }
@@ -437,71 +528,87 @@ function pintarPlata() {
   let total = Number(prodTorta.precio) || 0;
   const det = [];
   for (const gr of prodTorta.opciones || []) { const v = gr.valores.find((x) => x.id === torta.opc[gr.id]); if (v) { det.push(v.nombre); if (v.precio) total += Number(v.precio); } }
-  for (const a of prodTorta.adicionales || []) if (torta.extras.has(a.id)) { total += Number(a.precio) || 0; det.push(a.nombre.split(' ')[0] === 'Piso' ? 'piso de ganache' : a.nombre.toLowerCase()); }
+  for (const a of prodTorta.adicionales || []) if (torta.extras.has(a.id)) { total += Number(a.precio) || 0; det.push(FICHAS.extras.v[a.id]?.n.toLowerCase() || a.nombre.toLowerCase()); }
   $('[data-total]').textContent = `Total ${plata(total)}`;
   $('[data-sena]').textContent = `Seña ${plata(total * 0.5)}`;
   const d = det.join(' · ');
   $('[data-detalle]').textContent = d.charAt(0).toUpperCase() + d.slice(1) + (torta.fecha ? ` · retirás el ${fechaCorta(torta.fecha)}` : '');
 }
 const fechaCorta = (f) => { const dt = new Date(f + 'T12:00:00'); return `${DIAS_N[dt.getDay()].toLowerCase()} ${dt.getDate()}/${dt.getMonth() + 1}`; };
-function pintarDias() {
-  const cont = $('[data-dias]');
+function calcularDias() {
   let dias = [];
   try {
     const r = opcionesRetiro({ horarios: kit.config.horarios, encargo: kit.config.pedidos?.encargo, tz: kit.tz, productos: [prodTorta], categorias: kit.config.carta?.categorias || [], lineas: [{ id: ID_TORTA, cant: 1 }] });
     dias = r.dias || [];
   } catch (err) { console.warn('[rosie] días de retiro', err); }
-  // 8 días desde hoy: los que no llegan a las 48 hs o cierran, apagados (lugar reservado: nada salta)
   const hoy = new Date(new Date().toLocaleString('en-US', { timeZone: TZ }));
-  const celdas = [];
-  for (let k = 0; k < 21 && celdas.length < 7; k++) {
+  diasTorta = [];
+  for (let k = 0; k < 21 && diasTorta.length < 8; k++) {
     const d = new Date(hoy); d.setDate(hoy.getDate() + k);
-    if (!abreHoy(d.getDay())) continue; // solo los días que abre (mié a dom)
+    if (!abreHoy(d.getDay())) continue;
     const f = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-    const op = dias.find((x) => x.fecha === f);
-    const fr = op?.franjas?.find((x) => x.disponible);
-    celdas.push({ f, d, ok: !!fr, franja: fr?.id || null });
+    const fr = dias.find((x) => x.fecha === f)?.franjas?.find((x) => x.disponible);
+    diasTorta.push({ f, d, ok: !!fr, franja: fr?.id || null });
   }
-  if (torta.fecha && !celdas.some((c) => c.f === torta.fecha && c.ok)) torta.fecha = null;
-  if (!torta.fecha) { const pri = celdas.find((c) => c.ok); if (pri) { torta.fecha = pri.f; torta.franja = pri.franja; } }
-  cont.setAttribute('role', 'radiogroup'); cont.setAttribute('aria-label', 'Día de retiro');
-  cont.innerHTML = celdas.map((c) => `<button type="button" class="dia" role="radio" aria-checked="${c.f === torta.fecha}" data-fecha="${c.f}" data-franja="${c.franja || ''}" ${c.ok ? '' : 'disabled'}><span>${DIAS_C[c.d.getDay()]}</span><b>${c.d.getDate()}</b></button>`).join('');
-  pintarPlata();
+  if (torta.fecha && !diasTorta.some((c) => c.f === torta.fecha && c.ok)) torta.fecha = null;
+  if (!torta.fecha) { const pri = diasTorta.find((c) => c.ok); if (pri) { torta.fecha = pri.f; torta.franja = pri.franja; } }
 }
-$('[data-pasos]').addEventListener('click', (e) => {
-  const ch = e.target.closest('.chip[data-g]');
-  if (ch) { torta.opc[ch.dataset.g] = ch.dataset.v; $$(`.chip[data-g="${ch.dataset.g}"]`).forEach((b) => b.setAttribute('aria-checked', String(b === ch))); pintarTorta(true, ch.dataset.g); return; }
-  const ex = e.target.closest('.chip[data-extra]');
-  if (ex) { const id = ex.dataset.extra; torta.extras.has(id) ? torta.extras.delete(id) : torta.extras.add(id); ex.setAttribute('aria-pressed', String(torta.extras.has(id))); pintarTorta(true, 'extras'); return; }
-  const dia = e.target.closest('.dia');
-  if (dia && !dia.disabled) { torta.fecha = dia.dataset.fecha; torta.franja = dia.dataset.franja; $$('.dia').forEach((b) => b.setAttribute('aria-checked', String(b === dia))); pintarPlata(); }
+
+/* ---------- toques y arrastre (dedo y mouse) ---------- */
+let drag = null;
+fichasEl.addEventListener('pointerdown', (e) => {
+  const f = e.target.closest('.ficha'); if (!f || e.button > 0) return;
+  drag = { f, id: e.pointerId, x: e.clientX, y: e.clientY, mov: false, ghost: null };
 });
+addEventListener('pointermove', (e) => {
+  if (!drag || e.pointerId !== drag.id) return;
+  const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+  if (!drag.mov) {
+    if (Math.hypot(dx, dy) < 10) return;
+    drag.mov = true;
+    const bola = $('.ficha__bola', drag.f);
+    const r = bola.getBoundingClientRect();
+    drag.ghost = bola.cloneNode(true); drag.ghost.className = 'ficha__bola ficha__ghost';
+    drag.ghost.style.width = r.width + 'px'; drag.ghost.style.height = r.height + 'px';
+    document.body.appendChild(drag.ghost);
+    drag.ox = r.width / 2; drag.oy = r.height / 2;
+    escena.classList.add('espera');
+  }
+  drag.ghost.style.transform = `translate(${e.clientX - drag.ox}px, ${e.clientY - drag.oy}px) rotate(${dx / 12}deg)`;
+  const r = escena.getBoundingClientRect();
+  escena.classList.toggle('apunta', e.clientX > r.left && e.clientX < r.right && e.clientY > r.top && e.clientY < r.bottom);
+  e.preventDefault();
+}, { passive: false });
+function soltarFicha(e) {
+  if (!drag || e.pointerId !== drag.id) return;
+  const { f, mov, ghost } = drag; drag = null;
+  escena.classList.remove('espera');
+  if (!mov) return; // fue un toque: lo maneja el click
+  const dentro = escena.classList.contains('apunta');
+  escena.classList.remove('apunta');
+  ghost?.remove();
+  f.dataset.arrastrado = '1';
+  if (dentro) elegir(f.dataset.g, f.dataset.v, true);
+}
+addEventListener('pointerup', soltarFicha);
+addEventListener('pointercancel', soltarFicha);
+fichasEl.addEventListener('click', (e) => {
+  const f = e.target.closest('.ficha');
+  if (f) { if (f.dataset.arrastrado) { delete f.dataset.arrastrado; return; } elegir(f.dataset.g, f.dataset.v); return; }
+  const d = e.target.closest('.ficha-dia');
+  if (d && !d.disabled) { torta.fecha = d.dataset.fecha; torta.franja = d.dataset.franja; $$('.ficha-dia', fichasEl).forEach((b) => b.setAttribute('aria-checked', String(b === d))); pintarPlata(); }
+});
+fichasEl.addEventListener('dragstart', (e) => e.preventDefault());
+pasosEl.addEventListener('click', (e) => { const b = e.target.closest('[data-ir]'); if (b) { clearTimeout(auto); irPaso(Number(b.dataset.ir)); } });
+$('[data-sig]').addEventListener('click', () => { clearTimeout(auto); irPaso(torta.paso + 1); });
 $('[data-reservar-torta]').addEventListener('click', (e) => {
   if (!prodTorta) return;
   kit.carrito.agregar(ID_TORTA, 1, { ...lineaTorta(), origen: e.currentTarget });
   if (torta.fecha && torta.franja && kit.carrito.setRetiro) { try { kit.carrito.setRetiro({ fecha: torta.fecha, franja: torta.franja }); } catch (_) { /* el checkout lo pide */ } }
   setTimeout(() => kit.carrito.abrir(), reduce ? 0 : 650);
 });
-// pasos en el celu: carril deslizable + "Siguiente"
-const carril = $('[data-carril]');
-const pasos = $$('.paso', carril);
-const puntos = $('[data-puntos]');
-puntos.innerHTML = pasos.map(() => '<i></i>').join('');
-function pasoActual() { return Math.round(carril.scrollLeft / Math.max(1, carril.clientWidth)); }
-function pintarPaso() {
-  const i = Math.min(pasos.length - 1, pasoActual());
-  $('[data-paso-txt]').textContent = `Paso ${i + 1} de ${pasos.length}`;
-  $$('i', puntos).forEach((p, k) => p.classList.toggle('on', k === i));
-  const sig = $('[data-paso-sig]');
-  sig.hidden = i >= pasos.length - 1;
-}
-carril.addEventListener('scroll', () => requestAnimationFrame(pintarPaso), { passive: true });
-$('[data-paso-sig]').addEventListener('click', () => carril.scrollTo({ left: (pasoActual() + 1) * carril.clientWidth, behavior: reduce ? 'auto' : 'smooth' }));
-pintarPaso();
-arrastrable(carril);
 await leerTorta();
 kit.store.onChange?.(leerTorta);
-addEventListener('resize', () => { if (prodTorta) pintarTorta(false); }, { passive: true });
 
 // "Las otras tortas": desde cuándo se retira si encargás hoy
 const prox = $('[data-proximo]');

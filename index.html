@@ -33,7 +33,7 @@
 <link rel="preload" as="image" imagesrcset="img/f/hero-mesa-480.webp 480w, img/f/hero-mesa-800.webp 800w" imagesizes="260px" media="(max-width: 899px)">
 <link rel="preload" as="image" imagesrcset="img/f/hero-torta-520.webp 520w, img/f/hero-torta-960.webp 960w" imagesizes="460px" media="(min-width: 900px)">
 <link rel="stylesheet" href="kit/kit.css?v=1">
-<link rel="stylesheet" href="css/estilos.css?v=1">
+<link rel="stylesheet" href="css/estilos.css?v=2">
 </head>
 <body>
 
@@ -202,39 +202,23 @@
       <p class="cab__sub">Elegís bizcocho, crema y rellenos, y la deco la inspira la pastelera: frutas, flores, hierbas y picos rizados. Rinde 15 a 20 porciones. Se encarga con 48 hs y se confirma con el 50 % de seña.</p>
     </header>
 
-    <div class="armar rv">
-      <div class="armar__escena">
-        <div class="torta" data-torta aria-hidden="true">
-          <div class="torta__plato"></div>
-          <div class="torta__capas" data-capas></div>
-          <div class="torta__tope" data-tope></div>
-        </div>
-        <img class="armar__tita" src="img/tita.svg" alt="" width="132" height="152" aria-hidden="true">
-        <div class="armar__resumen">
-          <p class="armar__nom">Tu cumpleañitos</p>
-          <p class="armar__det" data-detalle aria-live="polite"></p>
-        </div>
+    <div class="juego rv" data-juego>
+      <div class="juego__escena" data-escena>
+        <svg class="torta-svg" viewBox="0 0 320 300" data-torta-svg role="img" aria-label="Tu torta de cumpleañitos"></svg>
+        <img class="juego__tita" src="img/tita.svg" alt="" width="132" height="152" aria-hidden="true">
+        <p class="juego__pista" data-pista aria-live="polite">Tocá un bizcocho o arrastralo a la torta</p>
       </div>
-
-      <div class="armar__pasos" data-pasos>
-        <div class="armar__nav-cel" aria-hidden="true"><span data-paso-txt>Paso 1 de 5</span><span class="armar__puntos" data-puntos></span></div>
-        <div class="armar__carril" data-carril>
-          <fieldset class="paso" data-grupo="bizcocho"><legend><span>1</span> Bizcocho</legend><div class="chips" data-chips="bizcocho"></div></fieldset>
-          <fieldset class="paso" data-grupo="crema"><legend><span>2</span> Crema</legend><div class="chips" data-chips="crema"></div></fieldset>
-          <fieldset class="paso" data-grupo="relleno"><legend><span>3</span> Relleno</legend><div class="chips" data-chips="relleno"></div></fieldset>
-          <fieldset class="paso" data-grupo="extras"><legend><span>4</span> Extras <small>(los que quieras)</small></legend><div class="chips" data-chips="extras"></div></fieldset>
-          <fieldset class="paso" data-grupo="dia"><legend><span>5</span> ¿Cuándo la retirás?</legend><div class="dias" data-dias></div><p class="paso__nota" data-dias-nota>Mínimo 48 hs · lunes y martes cerrado</p></fieldset>
+      <div class="juego__panel">
+        <ol class="juego__pasos" data-pasos aria-label="Pasos"></ol>
+        <div class="juego__paso">
+          <h3 class="juego__t" data-paso-t>Elegí el bizcocho</h3>
+          <div class="fichas" data-fichas></div>
         </div>
-        <div class="armar__pie">
-          <div class="armar__plata">
-            <span class="armar__total" data-total>Total $88.000</span>
-            <b class="armar__sena" data-sena>Seña $44.000</b>
-            <span class="armar__resto">El otro 50 % al retirar</span>
-          </div>
-          <div class="armar__btns">
-            <button type="button" class="btn btn--linea solo-cel" data-paso-sig>Siguiente</button>
-            <button type="button" class="btn btn--bordo btn--xl" data-reservar-torta>Reservar con seña</button>
-          </div>
+        <p class="juego__det" data-detalle aria-live="polite"></p>
+        <div class="juego__pie">
+          <div class="juego__plata"><span data-total>Total $88.000</span><b data-sena>Seña $44.000</b></div>
+          <button type="button" class="btn btn--linea juego__sig" data-sig>Siguiente</button>
+          <button type="button" class="btn btn--bordo juego__cta" data-reservar-torta>Reservar con seña</button>
         </div>
       </div>
     </div>
@@ -403,6 +387,6 @@
   <p class="pie__credito">Sitio desarrollado por <a href="https://alejomfernandez.com.ar" target="_blank" rel="noopener">Alejo Martín Fernández</a></p>
 </footer>
 
-<script type="module" src="js/main.js?v=1"></script>
+<script type="module" src="js/main.js?v=2"></script>
 </body>
 </html>
